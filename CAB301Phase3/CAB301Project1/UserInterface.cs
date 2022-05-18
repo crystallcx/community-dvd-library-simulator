@@ -11,6 +11,7 @@ namespace CAB301Project
         MovieCollection movieCollection = new MovieCollection();
         MemberCollection memberCollection = new MemberCollection(10);
         MovieGenre validGenre;
+        MovieClassification validClassification;
         public void MainMenu()
         {
          
@@ -192,7 +193,7 @@ namespace CAB301Project
 
             //Genre
             bool validGenreChecker;
-            Console.WriteLine("\nAllowed Genre: Action, Comedy, History, Drama or Western.");
+            Console.WriteLine("\nAllowed Genre: Action (1), Comedy (2), History (3), Drama (4) or Western (5).");
             //MovieGenre validGenre = (MovieGenre)Enum.Parse(typeof(MovieGenre), movieGenre);
             Console.WriteLine("Genre:");
             string movieGenrePrompt = Console.ReadLine();
@@ -204,7 +205,7 @@ namespace CAB301Project
             while (validGenreChecker == false)
             {
                 Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
-                Console.WriteLine("Allowed Genre: Action, Comedy, History, Drama or Western.");
+                Console.WriteLine("Allowed Genre: Action (1), Comedy (2), History (3), Drama (4) or Western (5).");
                 Console.WriteLine("Genre:");
                 string movieGenrePrompt2 = Console.ReadLine();
                 validGenreChecker = Enum.TryParse(movieGenrePrompt2, out validGenre);
@@ -222,13 +223,34 @@ namespace CAB301Project
             }
 
             //Classification
+            bool validClassificationChecker;
+            Console.WriteLine("Allowed Classification: G (1), PG (2), M (3) or M15Plus (4).");
             Console.WriteLine("Classification:");
-            Console.WriteLine("G, PG, M or M15Plus.");
-            string movieClassification = Console.ReadLine();
-            MovieClassification validClassification = (MovieClassification)Enum.Parse(typeof(MovieClassification), movieClassification);
+            string movieClassificationPrompt = Console.ReadLine();
+            validClassificationChecker = Enum.TryParse(movieClassificationPrompt, out validClassification);
+            //MovieClassification validClassification = (MovieClassification)Enum.Parse(typeof(MovieClassification), movieClassification);
             if (!Enum.IsDefined(typeof(MovieClassification), validClassification) && !validClassification.ToString().Contains(","))
             {
-                throw new InvalidOperationException($"{movieClassification} is not an underlying value of the YourEnum enumeration.");
+                validClassificationChecker = false;
+            }
+            while (validClassificationChecker == false)
+            {
+                Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
+                Console.WriteLine("Allowed Classification: G, PG, M or M15Plus");
+                Console.WriteLine("Classification:");
+                string movieClassificationPrompt2 = Console.ReadLine();
+                validClassificationChecker = Enum.TryParse(movieClassificationPrompt, out validClassification);
+                if (!Enum.IsDefined(typeof(MovieClassification), validClassification) && !validClassification.ToString().Contains(","))
+                {
+                    validClassificationChecker = false;
+                }
+                if (int.TryParse(movieClassificationPrompt2, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
             }
 
             //Duration
