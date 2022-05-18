@@ -6,3 +6,12 @@ Version 1.0
 - Member
 - MemberCollections
 - Program.cs (used for testing)
+Version 1.2
+- Added code from Phase 2:
+- IMovie
+- IMovieCollections
+- Movie
+- MovieCollections
+
+- Added UserInterface class
+- added a few methods in there and linked the menus up to not crash
