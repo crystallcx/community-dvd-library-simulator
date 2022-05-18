@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    //CAB301 assessment 1 - 2022
-    //The implementation of Member ADT
-
-
+//CAB301 assessment 1 - 2022
+//The implementation of Member ADT
+namespace CAB301Project
+{
     class Member : IMember
     {
         // Fields
@@ -78,6 +78,7 @@ using System.Threading.Tasks;
 
 
     }
+}
 
 
 

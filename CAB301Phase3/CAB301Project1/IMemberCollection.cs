@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-    interface IMemberCollection
+namespace CAB301Project
+{
+    public interface IMemberCollection
     {
         public int Capacity // get the capacity of this member collection 
         {
@@ -56,9 +57,10 @@ using System.Threading.Tasks;
         // Post-condition: a string containing the information about all the members in this member collection is returned
         public string ToString();
 
-
+        //this needs to be removed before submission
+        public void printMemColl();
     }
-
+}
 
 
 

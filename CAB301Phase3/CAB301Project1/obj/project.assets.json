@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Project1\\CAB301Project1\\CAB301Project1.csproj",
-      "projectName": "CAB301Project1",
-      "projectPath": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Project1\\CAB301Project1\\CAB301Project1.csproj",
+      "projectUniqueName": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Phase3\\CAB301Project1\\CAB301Project.csproj",
+      "projectName": "CAB301Project",
+      "projectPath": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Phase3\\CAB301Project1\\CAB301Project.csproj",
       "packagesPath": "C:\\Users\\James\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Project1\\CAB301Project1\\obj\\",
+      "outputPath": "C:\\Users\\James\\Desktop\\CAB301Project3\\CAB301Phase3\\CAB301Project1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

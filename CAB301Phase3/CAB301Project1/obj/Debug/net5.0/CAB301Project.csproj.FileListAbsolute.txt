@@ -1,0 +1,16 @@
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.exe
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.deps.json
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.runtimeconfig.json
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.runtimeconfig.dev.json
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.dll
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\ref\CAB301Project.dll
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\bin\Debug\net5.0\CAB301Project.pdb
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.csproj.AssemblyReference.cache
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.AssemblyInfoInputs.cache
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.AssemblyInfo.cs
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.csproj.CoreCompileInputs.cache
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.dll
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\ref\CAB301Project.dll
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.pdb
+C:\Users\James\Desktop\CAB301Project3\CAB301Phase3\CAB301Project1\obj\Debug\net5.0\CAB301Project.genruntimeconfig.cache

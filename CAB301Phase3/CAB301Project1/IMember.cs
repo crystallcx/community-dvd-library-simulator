@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-interface IMember
+public interface IMember
 {
 
     // Get and set the first name of this member
