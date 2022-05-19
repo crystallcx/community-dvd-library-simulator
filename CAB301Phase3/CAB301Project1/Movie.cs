@@ -131,7 +131,7 @@ namespace CAB301Project
         //Post-condition: A string containing the title, genre, classification, duration, and the number of available copies of this movie has been returned
         public string ToString()
         {
-            return "Title: " + title + ", Genre: " + genre + ", Classification: " + classification + ", Duration: " + duration + ", Available Copies: " + AvailableCopies;
+            return " Title: " + title + "\n Genre: " + genre + "\n Classification: " + classification + "\n Duration: " + duration + "\n Available Copies: " + AvailableCopies;
         }
 
         public void printBorrowers()

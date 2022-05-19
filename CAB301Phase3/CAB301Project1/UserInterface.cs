@@ -189,13 +189,32 @@ namespace CAB301Project
             Console.WriteLine("=============Add New Movie To Collection============");
 
             //Title
+            //A title is valid if its length is greater than 1 - no empty stings will be accepeted
             Console.WriteLine("Title:");
-            string movieTitle = Console.ReadLine();
-
+            string movieTitlePrompt = Console.ReadLine();
+            bool validTitleChecker = movieTitlePrompt.Length > 0;
+            while(validTitleChecker == false)
+            {
+                Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
+                Console.WriteLine("Title:");
+                movieTitlePrompt = Console.ReadLine();
+                validTitleChecker = movieTitlePrompt.Length > 0;
+                if (int.TryParse(movieTitlePrompt, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+            }
+            string validMovieTitle = movieTitlePrompt;
+            
             //Genre
+            //Here we check if the input is a valid Genre, a Genre must be one of the following:
+            //Allowed Genre: Action (1), Comedy (2), History (3), Drama (4) or Western (5)
+            //A user can either enter in the number associcated with the Genre, i.e "1" or can write the full name of the genre, i.e "Action"
             bool validGenreChecker;
             Console.WriteLine("\nAllowed Genre: Action (1), Comedy (2), History (3), Drama (4) or Western (5).");
-            //MovieGenre validGenre = (MovieGenre)Enum.Parse(typeof(MovieGenre), movieGenre);
             Console.WriteLine("Genre:");
             string movieGenrePrompt = Console.ReadLine();
             validGenreChecker = Enum.TryParse(movieGenrePrompt, out validGenre);
@@ -224,12 +243,14 @@ namespace CAB301Project
             }
 
             //Classification
+            //Here we check if the input is a valid Classification, a Classification must be one of the following:
+            //Allowed Classification: G (1), PG (2), M (3) or M15Plus (4).
+            //A user can either enter in the number associcated with the Classification, i.e "1" or can write the full name of the genre, i.e "M15Plus"
             bool validClassificationChecker;
-            Console.WriteLine("Allowed Classification: G (1), PG (2), M (3) or M15Plus (4).");
+            Console.WriteLine("\nAllowed Classification: G (1), PG (2), M (3) or M15Plus (4).");
             Console.WriteLine("Classification:");
             string movieClassificationPrompt = Console.ReadLine();
             validClassificationChecker = Enum.TryParse(movieClassificationPrompt, out validClassification);
-            //MovieClassification validClassification = (MovieClassification)Enum.Parse(typeof(MovieClassification), movieClassification);
             if (!Enum.IsDefined(typeof(MovieClassification), validClassification) && !validClassification.ToString().Contains(","))
             {
                 validClassificationChecker = false;
@@ -237,10 +258,10 @@ namespace CAB301Project
             while (validClassificationChecker == false)
             {
                 Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
-                Console.WriteLine("Allowed Classification: G, PG, M or M15Plus");
+                Console.WriteLine("Allowed Classification: G (1), PG (2), M (3) or M15Plus (4)");
                 Console.WriteLine("Classification:");
                 string movieClassificationPrompt2 = Console.ReadLine();
-                validClassificationChecker = Enum.TryParse(movieClassificationPrompt, out validClassification);
+                validClassificationChecker = Enum.TryParse(movieClassificationPrompt2, out validClassification);
                 if (!Enum.IsDefined(typeof(MovieClassification), validClassification) && !validClassification.ToString().Contains(","))
                 {
                     validClassificationChecker = false;
@@ -255,24 +276,88 @@ namespace CAB301Project
             }
 
             //Duration
-            Console.WriteLine("Duration:");
-            string movieDuration = Console.ReadLine();
-            int.TryParse(movieDuration, out int validDuration);
+            //A Duration is valid if > 0 - no empty strings will be accepted.
+            bool validDuration;
+            Console.WriteLine("\nDuration:");
+            string movieDurationPrompt = Console.ReadLine();
+            int.TryParse(movieDurationPrompt, out int movieDuration);
+            validDuration = movieDuration > 0;
+            while (validDuration == false)
+            {
+                Console.WriteLine("Duration must be greater than 0 and Numeric.");
+                Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
+                Console.WriteLine("Duration:");
+                movieDurationPrompt = Console.ReadLine();
+                int.TryParse(movieDurationPrompt, out movieDuration);
+                validDuration = movieDuration > 0;
+                if (int.TryParse(movieTitlePrompt, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+            }
+            int validMovieDuration = movieDuration;
 
             //Copies
-            Console.WriteLine("Available Copies:");
-            string movieAvailableCopies = Console.ReadLine();
-            int.TryParse(movieAvailableCopies, out int validCopies);
+            //Available copies is valid if > 0 - no empty strings will be accepeted.
+            bool validCopies;
+            Console.WriteLine("\nAvailable Copies:");
+            string movieCopiesPrompt = Console.ReadLine();
+            int.TryParse(movieCopiesPrompt, out int movieCopies);
+            validCopies = movieCopies > 0;
+            while (validCopies == false)
+            {
+                Console.WriteLine("Available Copies must be greater than 0 and Numeric.");
+                Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
+                Console.WriteLine("Available Copies:");
+                movieCopiesPrompt = Console.ReadLine();
+                int.TryParse(movieCopiesPrompt, out movieCopies);
+                validCopies = movieCopies > 0;
+                if (int.TryParse(movieTitlePrompt, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+            }
+            int validMovieCopies = movieCopies;
 
-            Movie movie = new Movie(movieTitle, validGenre, validClassification, validDuration, validCopies);
-            movieCollection.Insert(movie);
-            Console.WriteLine($"{movie.ToString()}");
-            Console.WriteLine("Press any key to return to the staff menu.");
-            Console.ReadKey();
+            //add temp movie object
+            Movie movie = new Movie(validMovieTitle, validGenre, validClassification, validMovieDuration, validMovieCopies);
 
-            StaffMenu();
+            //Review input
+            // y for yes, n for no.
+            bool validReviewInput = false;
+            while(validReviewInput == false)
+            {
+                Console.Clear();
+                Console.Write("==========Confirm Movie Details==========\n\n");
+                Console.WriteLine(movie.ToString());
+                Console.WriteLine("\n To add this movie, press 'Y' or Press or press 'N' to exit ");
+                string choice = Console.ReadLine();
+                switch(choice.ToLower())
+                {
+                    case "y":
+                        movieCollection.Insert(movie);
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    case "n":
+                        Console.WriteLine("\n Cancelling...");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input - try again.");
+                        break;
 
-
+                }
+            }
         }
 
 
