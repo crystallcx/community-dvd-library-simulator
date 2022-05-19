@@ -12,9 +12,39 @@ namespace CAB301Project
         MemberCollection memberCollection = new MemberCollection(10);
         MovieGenre validGenre;
         MovieClassification validClassification;
+
+        public void Initalise()
+        {
+            Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
+            movieCollection.Insert(movie1);
+            movieCollection.Insert(movie2);
+            movieCollection.Insert(movie3);
+            movieCollection.Insert(movie4);
+            movieCollection.Insert(movie5);
+
+            Member member1 = new Member("Aone", "Onelast", "0404444444", "4837"); //3
+            Member member2 = new Member("Btwo", "Twolast", "0404444444", "4837"); //5
+            Member member3 = new Member("Cthree", "Threelast", "0404444444", "4837"); //4
+            Member member4 = new Member("Dfour", "Fourlast", "0404444444", "4837"); //2
+            Member member5 = new Member("five", "Fivelast", "0404444444", "4837"); //1
+            memberCollection.Add(member1);
+            memberCollection.Add(member2);
+            memberCollection.Add(member3);
+            memberCollection.Add(member4);
+            memberCollection.Add(member5);
+
+            movie2.AddBorrower(member2);
+            movie2.AddBorrower(member3);
+            movie2.AddBorrower(member1);
+        }
+
         public void MainMenu()
         {
-            InitalMovieCollection(); /*   delete this line later   */
+            Initalise(); /*   delete this line later   */
 
 
             Console.Clear();
@@ -87,10 +117,10 @@ namespace CAB301Project
                         /*something here */
                         break;
                     case 5:
-                        /*something here */
+                        DisplayMemberContact();/*dont know */
                         break;
                     case 6:
-                        /*something here */
+                        DisplayMovieBorrowers();/*something here */
                         break;
                     case 0:
                         MainMenu();
@@ -132,7 +162,7 @@ namespace CAB301Project
                         BrowseAllMovies();
                         break;
                     case 2:
-                        /*something here */
+                        DisplayMovieInfo();
                         break;
                     case 3:
                         /*something here */
@@ -276,20 +306,6 @@ namespace CAB301Project
         }
 
 
-        public void InitalMovieCollection()
-        {
-            Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
-            movieCollection.Insert(movie1);
-            movieCollection.Insert(movie2);
-            movieCollection.Insert(movie3);
-            movieCollection.Insert(movie4);
-            movieCollection.Insert(movie5);
-
-        }
 
 
         public void RemoveMoviefromCollection()
@@ -382,14 +398,71 @@ namespace CAB301Project
 
             //Create Member object with valid phone number & pin 
             Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
-            memberCollection.Add(validMember); 
+            memberCollection.Add(validMember);
             Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
             //Console.WriteLine($"{validMember.FirstName},{validMember.LastName},{validMember.ContactNumber},{validMember.Pin}");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
+        }
 
+        public void DisplayMemberContact()
+        {
+            Console.Clear();
+            Console.WriteLine("========= Obtain a Member's Contact Number ==========");
+            Console.WriteLine("Please enter a member's first name:");
+            string memberFirstName = Console.ReadLine();
+            Console.WriteLine("Please enter a member's last name:");
+            string memberLastName = Console.ReadLine();
 
+            /* something here */
+
+            Console.WriteLine("Press any key to return to the staff menu.");
+            Console.ReadKey();
+            StaffMenu();
+        }
+
+        public void DisplayMovieBorrowers() /*in progress*/
+        {
+            Console.Clear();
+            Console.WriteLine("=========== Display Borrowers of a Movie ===============\n");
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($"There are currently no movies available.");
+                Console.WriteLine("Press any key to return to the staff menu.");
+                Console.ReadKey();
+                StaffMenu();
+            }
+            Console.WriteLine("\nEnter the title of the movie:");
+
+            Movie test = CheckMovieInput();
+            Console.WriteLine(test.Borrowers.ToString());
+
+            Console.WriteLine("Press any key to return to the staff menu.");
+            Console.ReadKey();
+            StaffMenu();
+        }
+
+        public Movie CheckMovieInput()
+        {
+            Movie validMovie = null;
+            bool validMovieCheck = false;
+            while (validMovieCheck == false)
+            {
+                string movieTitle = Console.ReadLine();
+                Movie movie = (Movie)movieCollection.Search(movieTitle);
+                Console.WriteLine($"Movie {movieTitle} does not exist in the movie collection. Enter 0 to exit.");
+                Console.WriteLine("Enter a valid movie title:");
+                if (movie != null)
+                {
+                    validMovie = movie;
+                    validMovieCheck = true;
+                    return validMovie;
+                }
+                if (movieTitle == "0")
+                    StaffMenu();
+            }
+            return validMovie;
         }
 
         public void MemberLogin()
@@ -397,7 +470,7 @@ namespace CAB301Project
             Console.Clear();
             Console.WriteLine("=========Member Login==========");
             Console.WriteLine("Please enter first name:");
-            string memberFirstName = Console.ReadLine();            
+            string memberFirstName = Console.ReadLine();
             Console.WriteLine("Please enter last name:");
             string memberLastName = Console.ReadLine();
             Console.WriteLine("Please Enter PIN:"); //password
@@ -406,12 +479,13 @@ namespace CAB301Project
             /* something here 
             //Member member = new Member(memberFirstName, memberLastName, "", memberPIN);
             Member member = memberCollection.Search()
-            
-             
+
+
              */
             Console.WriteLine("Member login verification has yet to be implemented.\n" +
                               "Press any key to continue to the member menu.");
             Console.ReadKey();
+            //Member member = memberCollection.Search(userName, password);
             MemberMenu();
         }
 
@@ -438,7 +512,30 @@ namespace CAB301Project
             MemberMenu();
         }
 
+        public void DisplayMovieInfo()
+        {
+            Console.Clear();
+            Console.WriteLine("================Obtain Movie Info=================\n");
+            Console.WriteLine("Please enter a movie title:");
+            bool validmovieQuery = false;
 
+            while (!validmovieQuery)
+            {
+                string movieTitleInput = Console.ReadLine();
+                Movie movie = (Movie)movieCollection.Search(movieTitleInput);
+                Console.WriteLine("Please enter a valid movie title:");
+                if (movieTitleInput == "0")
+                    MemberMenu();
+                if (movie != null)
+                {
+                    Console.WriteLine(movie.ToString() + "\n");
+                    validmovieQuery = true;
+                }
+            }
+            Console.WriteLine("Press any key to return to the member menu.");
+            Console.ReadKey();
+            MemberMenu();
+        }
 
     }
 }
