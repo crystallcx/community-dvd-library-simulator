@@ -14,7 +14,8 @@ namespace CAB301Project
         MovieClassification validClassification;
         public void MainMenu()
         {
-         
+            InitalMovieCollection(); /*   delete this line later   */
+
 
             Console.Clear();
             Console.Write("============================================================\n" +
@@ -35,7 +36,7 @@ namespace CAB301Project
                         StaffLogin();
                         break;
                     case 2:
-                        /*something here */
+                        MemberLogin(); /* incomplete */
                         break;
                     case 0:
                         Environment.Exit(0);
@@ -62,7 +63,7 @@ namespace CAB301Project
                           " 1. Add new DVDs of a new movie to the system\n" +
                           " 2. Remove DVDs of a movie from the system\n" +
                           " 3. Register a new Member with the system\n" +
-                          " 4. Remove a resgistered member from the system\n" +
+                          " 4. Remove a registered member from the system\n" +
                           " 5. Display a member's contact phone number, given the member's name\n" +
                           " 6. Display all numbers who are currently renting a particular movie\n" +
                           " 0. Return to the main menu\n\n" +
@@ -77,10 +78,10 @@ namespace CAB301Project
                         AddMovieToCollection();
                         break;
                     case 2:
-                        /*something here */
+                        RemoveMoviefromCollection(); 
                         break;
                     case 3:
-                        /*something here */
+                        //RegisterMember()/*something here */
                         break;
                     case 4:
                         /*something here */
@@ -275,6 +276,83 @@ namespace CAB301Project
         }
 
 
+        public void InitalMovieCollection()
+        {
+            Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
+            movieCollection.Insert(movie1);
+            movieCollection.Insert(movie2);
+            movieCollection.Insert(movie3);
+            movieCollection.Insert(movie4);
+            movieCollection.Insert(movie5);
+
+        }
+
+
+        public void RemoveMoviefromCollection()
+        {
+            /* add case insensitivity */
+
+            Console.Clear();
+            Console.WriteLine("=============Remove Movie From Collection============\n");
+            IMovie[] movieArray = movieCollection.ToArray();
+
+            Console.WriteLine("Current collection of movies:");
+            if (!movieCollection.IsEmpty())
+            {
+                foreach (IMovie imovie in movieArray)
+                {
+                    Console.WriteLine($"{imovie.ToString()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No movies exist in the movie collection.");
+                Console.WriteLine("Press any key to return to the staff menu.");
+                Console.ReadKey();
+                StaffMenu();
+            }
+
+            Console.WriteLine("=====================================================\n" +
+                              "\nEnter the title of the movie to be removed:");
+
+            bool validMovieChecker = false;
+            while (validMovieChecker == false)
+            {
+                string movieTitlePrompt = Console.ReadLine();
+                Movie movie = (Movie)movieCollection.Search(movieTitlePrompt);
+                Console.WriteLine($"Movie {movieTitlePrompt} does not exist in the movie collection, please try again or enter 0 to quit.");
+                Console.WriteLine("Enter the title of the movie to be removed:");
+                if (movieTitlePrompt == "0")
+                    StaffMenu();
+                if (movie != null)
+                {
+                    Console.WriteLine($"{movie.Title} has successfully been deleted from the movie collection.");
+                    movieCollection.Delete(movie);
+                    validMovieChecker = true;
+                }
+                //Console.ReadKey();
+                //RemoveMoviefromCollection();
+            }
+            Console.WriteLine("Press any key to return to the staff menu.");
+            Console.ReadKey();
+            StaffMenu();
+        }
+
+        public void MemberLogin()
+        {
+            Console.Clear();
+            Console.WriteLine("=========Member Login==========");
+            Console.WriteLine("Please Enter Username:");
+            string memberUserName = Console.ReadLine();
+            Console.WriteLine("Please Enter Password:");
+            string memberPassword = Console.ReadLine();
+
+            /* something here */
+        }
 
     }
 }
