@@ -81,7 +81,7 @@ namespace CAB301Project
                         RemoveMoviefromCollection();
                         break;
                     case 3:
-                        RegisterMember();/*something here */
+                        RegisterMember();
                         break;
                     case 4:
                         /*something here */
@@ -129,7 +129,7 @@ namespace CAB301Project
                 switch (choice)
                 {
                     case 1:
-                        /*something here */
+                        BrowseAllMovies();
                         break;
                     case 2:
                         /*something here */
@@ -383,7 +383,7 @@ namespace CAB301Project
             //Create Member object with valid phone number & pin 
             Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
             memberCollection.Add(validMember); 
-            Console.WriteLine($"{validMember.FirstName} succesfully registered.");
+            Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
             //Console.WriteLine($"{validMember.FirstName},{validMember.LastName},{validMember.ContactNumber},{validMember.Pin}");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
@@ -396,13 +396,49 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("=========Member Login==========");
-            Console.WriteLine("Please Enter Username:");
-            string memberUserName = Console.ReadLine();
-            Console.WriteLine("Please Enter Password:");
-            string memberPassword = Console.ReadLine();
+            Console.WriteLine("Please enter first name:");
+            string memberFirstName = Console.ReadLine();            
+            Console.WriteLine("Please enter last name:");
+            string memberLastName = Console.ReadLine();
+            Console.WriteLine("Please Enter PIN:"); //password
+            string memberPIN = Console.ReadLine();
 
-            /* something here */
+            /* something here 
+            //Member member = new Member(memberFirstName, memberLastName, "", memberPIN);
+            Member member = memberCollection.Search()
+            
+             
+             */
+            Console.WriteLine("Member login verification has yet to be implemented.\n" +
+                              "Press any key to continue to the member menu.");
+            Console.ReadKey();
+            MemberMenu();
         }
+
+        public void BrowseAllMovies()
+        {
+            Console.Clear();
+            Console.WriteLine("================Browsing All Movies=================\n");
+            IMovie[] movieArray = movieCollection.ToArray();
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($"There are currently no movies available.");
+                Console.WriteLine("Press any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+
+            foreach (IMovie imovie in movieArray)
+            {
+                Console.WriteLine($"{imovie.ToString()}");
+            }
+
+            Console.WriteLine("\nPress any key to return to the member menu.");
+            Console.ReadKey();
+            MemberMenu();
+        }
+
+
 
     }
 }
