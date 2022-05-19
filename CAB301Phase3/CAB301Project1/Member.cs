@@ -72,7 +72,7 @@ namespace CAB301Project
         // Post-condition: a  string containing the first name, last name, and contact number of this member is returned
         public string ToString()
         {
-            return lastName + ", " + firstName;
+            return " "+ lastName + ", " + firstName + ", " + contactNumber;
         }
 
 

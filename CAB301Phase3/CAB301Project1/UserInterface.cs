@@ -114,7 +114,7 @@ namespace CAB301Project
                         RegisterMember();
                         break;
                     case 4:
-                        /*something here */
+                        DeleteRegisteredMember();
                         break;
                     case 5:
                         DisplayMemberContact();/*dont know */
@@ -367,7 +367,7 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Movie Details==========\n\n");
-                Console.WriteLine(movie.ToString());
+                Console.WriteLine(movie.ToString().Replace(',', '\n'));
                 Console.WriteLine("\n To add this movie, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch(choice.ToLower())
@@ -426,19 +426,49 @@ namespace CAB301Project
             while (validMovieChecker == false)
             {
                 string movieTitlePrompt = Console.ReadLine();
+                Console.WriteLine();
                 Movie movie = (Movie)movieCollection.Search(movieTitlePrompt);
-                Console.WriteLine($"Movie {movieTitlePrompt} does not exist in the movie collection, please try again or enter 0 to quit.");
-                Console.WriteLine("Enter the title of the movie to be removed:");
-                if (movieTitlePrompt == "0")
-                    StaffMenu();
                 if (movie != null)
                 {
-                    Console.WriteLine($"{movie.Title} has successfully been deleted from the movie collection.");
-                    movieCollection.Delete(movie);
-                    validMovieChecker = true;
+                    //Review input
+                    // y for yes, n for no.
+                    bool validReviewInput = false;
+                    while (validReviewInput == false)
+                    {
+                        Console.Clear();
+                        Console.Write("==========Confirm Delete Movie ==========\n\n");
+                        Console.WriteLine(movie.ToString().Replace(',', '\n'));
+                        Console.WriteLine("\n To DELETE this movie, press 'Y' or Press or press 'N' to exit ");
+                        string choice = Console.ReadLine();
+                        switch (choice.ToLower())
+                        {
+                            case "y":
+                                Console.WriteLine($"\n{movie.Title} has successfully been deleted from the movie collection.");
+                                movieCollection.Delete(movie);
+                                Console.WriteLine("\nPress any key to continue...");
+                                Console.ReadKey();
+                                StaffMenu();
+                                break;
+                            case "n":
+                                Console.WriteLine("\n Cancelling...");
+                                Console.WriteLine("\nPress any key to continue...");
+                                Console.ReadKey();
+                                StaffMenu();
+                                break;
+                            default:
+                                Console.WriteLine("Invalid Input - try again.");
+                                break;
+                        }
+                    }
+                    
                 }
-                //Console.ReadKey();
-                //RemoveMoviefromCollection();
+                else
+                {
+                    Console.WriteLine($"Movie {movieTitlePrompt} does not exist in the movie collection, please try again or enter 0 to quit.");
+                    Console.WriteLine("Enter the title of the movie to be removed:");
+                    if (movieTitlePrompt == "0")
+                        StaffMenu();
+                }
             }
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
@@ -458,12 +488,11 @@ namespace CAB301Project
             Console.Write("PIN: ");
             string pin = Console.ReadLine();
             Console.WriteLine();
-
             Member member = new Member(firstName, lastName, contactNumber, pin);
-
             bool validPhoneNumber = IMember.IsValidContactNumber(member.ContactNumber);
             bool validPIN = IMember.IsValidPin(member.Pin);
 
+            //loop till a valid pin is given
             while (!validPhoneNumber)
             {
 
@@ -474,6 +503,7 @@ namespace CAB301Project
                     validPhoneNumber = true;
             }
 
+            //loop til a valid pin is given
             while (!validPIN)
             {
                 Console.Write("Please enter a valid pin: ");
@@ -482,21 +512,107 @@ namespace CAB301Project
                 if (IMember.IsValidPin(member.Pin))
                     validPIN = true;
             }
-
             //Create Member object with valid phone number & pin 
             Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
 
-            memberCollection.Add(validMember); 
-
-            //memberCollection.Add(validMember);
-
-            Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
-            //Console.WriteLine($"{validMember.FirstName},{validMember.LastName},{validMember.ContactNumber},{validMember.Pin}");
+            //Review input
+            // y for yes, n for no.
+            bool validReviewInput = false;
+            while (validReviewInput == false)
+            {
+                Console.Clear();
+                Console.Write("==========Confirm Add Member ==========\n\n");
+                Console.WriteLine(validMember.ToString().Replace(',', '\n'));
+                Console.WriteLine("\n To add this member, press 'Y' or Press or press 'N' to exit ");
+                string choice = Console.ReadLine();
+                switch (choice.ToLower())
+                {
+                    case "y":
+                        memberCollection.Add(validMember);
+                        Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    case "n":
+                        Console.WriteLine("\n Cancelling...");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input - try again.");
+                        break;
+                }
+            }
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
-
         }
+
+
+        public void DeleteRegisteredMember()
+        {
+            Console.Clear();
+            Console.WriteLine("=================Delete a Registered Member===================\n");
+            Console.Write("First Name: ");
+            string firstName = Console.ReadLine();
+            Console.Write("Last Name: ");
+            string lastName = Console.ReadLine();
+
+            Console.WriteLine();
+            Member member = new Member(firstName, lastName);
+            bool validMember = memberCollection.Search(member);
+            while (!validMember)
+            {
+
+                Console.Write("First Name: ");
+                firstName = Console.ReadLine();
+                Console.Write("Last Name: ");
+                lastName = Console.ReadLine();
+                //may need to add here to break out of loop
+                Console.WriteLine();
+                member = new Member(firstName, lastName);
+                validMember = memberCollection.Search(member);
+            }
+
+            //Review input
+            // y for yes, n for no.
+            bool validReviewInput = false;
+            while (validReviewInput == false)
+            {
+                Console.Clear();
+                Console.Write("==========Confirm Delete Member ==========\n\n");
+                Console.WriteLine(member.ToString().Replace(',', '\n'));
+                Console.WriteLine("\n To DELETE this member, press 'Y' or Press or press 'N' to exit ");
+                string choice = Console.ReadLine();
+                switch (choice.ToLower())
+                {
+                    case "y":
+                        memberCollection.Delete(member);
+                        Console.WriteLine($"{member.FirstName} {member.LastName} succesfully deleted.");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    case "n":
+                        Console.WriteLine("\n Cancelling...");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        StaffMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input - try again.");
+                        break;
+                }
+            }
+            Console.WriteLine("Press any key to return to the staff menu.");
+            Console.ReadKey();
+            StaffMenu();
+        }
+
+
+
 
         public void DisplayMemberContact()
         {
@@ -507,7 +623,16 @@ namespace CAB301Project
             Console.WriteLine("Please enter a member's last name:");
             string memberLastName = Console.ReadLine();
 
-            /* something here */
+            Member member = new Member(memberFirstName, memberLastName);
+            bool validMember = memberCollection.Search(member);
+            if (!memberCollection.IsEmpty())
+            {
+                for(int i = 0; i < memberCollection.Number; i++)
+                {
+                    Console.WriteLine(1);
+                    //unsure
+                }
+            }
 
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
