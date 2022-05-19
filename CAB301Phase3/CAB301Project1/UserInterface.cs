@@ -355,18 +355,10 @@ namespace CAB301Project
             }
             int validMovieCopies = movieCopies;
 
-<<<<<<< HEAD
+
             //add temp movie object
             Movie movie = new Movie(validMovieTitle, validGenre, validClassification, validMovieDuration, validMovieCopies);
-=======
-            Movie movie = new Movie(movieTitle, validGenre, validClassification, validDuration, validCopies);
-            movieCollection.Insert(movie);
-            Console.WriteLine($"{movie.ToString()}");
-            Console.WriteLine("Press any key to return to the staff menu.");
-            Console.ReadKey();
 
-            StaffMenu();
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
 
             //Review input
             // y for yes, n for no.
@@ -493,20 +485,17 @@ namespace CAB301Project
 
             //Create Member object with valid phone number & pin 
             Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
-<<<<<<< HEAD
+
             memberCollection.Add(validMember); 
-=======
-            memberCollection.Add(validMember);
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
+
+            //memberCollection.Add(validMember);
+
             Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
             //Console.WriteLine($"{validMember.FirstName},{validMember.LastName},{validMember.ContactNumber},{validMember.Pin}");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
-<<<<<<< HEAD
 
-
-=======
         }
 
         public void DisplayMemberContact()
@@ -566,7 +555,7 @@ namespace CAB301Project
                     StaffMenu();
             }
             return validMovie;
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
+
         }
 
         public void MemberLogin()
@@ -574,11 +563,11 @@ namespace CAB301Project
             Console.Clear();
             Console.WriteLine("=========Member Login==========");
             Console.WriteLine("Please enter first name:");
-<<<<<<< HEAD
+
             string memberFirstName = Console.ReadLine();            
-=======
-            string memberFirstName = Console.ReadLine();
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
+
+            //string memberFirstName = Console.ReadLine();
+
             Console.WriteLine("Please enter last name:");
             string memberLastName = Console.ReadLine();
             Console.WriteLine("Please Enter PIN:"); //password
@@ -587,19 +576,12 @@ namespace CAB301Project
             /* something here 
             //Member member = new Member(memberFirstName, memberLastName, "", memberPIN);
             Member member = memberCollection.Search()
-<<<<<<< HEAD
-            
-             
-=======
 
-
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
              */
             Console.WriteLine("Member login verification has yet to be implemented.\n" +
                               "Press any key to continue to the member menu.");
             Console.ReadKey();
-<<<<<<< HEAD
-=======
+
             //Member member = memberCollection.Search(userName, password);
             MemberMenu();
         }
@@ -649,11 +631,10 @@ namespace CAB301Project
             }
             Console.WriteLine("Press any key to return to the member menu.");
             Console.ReadKey();
->>>>>>> 4b95583391d16ffe5863e350e0696ec607bf8ba7
             MemberMenu();
         }
 
-        public void BrowseAllMovies()
+        public void BrowseAllMovies1()
         {
             Console.Clear();
             Console.WriteLine("================Browsing All Movies=================\n");
