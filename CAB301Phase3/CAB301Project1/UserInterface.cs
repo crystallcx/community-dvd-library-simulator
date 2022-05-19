@@ -78,10 +78,10 @@ namespace CAB301Project
                         AddMovieToCollection();
                         break;
                     case 2:
-                        RemoveMoviefromCollection(); 
+                        RemoveMoviefromCollection();
                         break;
                     case 3:
-                        //RegisterMember()/*something here */
+                        RegisterMember();/*something here */
                         break;
                     case 4:
                         /*something here */
@@ -171,7 +171,7 @@ namespace CAB301Project
             string staffUserName = Console.ReadLine();
             Console.WriteLine("Please Enter Password:");
             string staffPassword = Console.ReadLine();
-            if(staffUserName == "staff" && staffPassword == "today123")
+            if (staffUserName == "staff" && staffPassword == "today123")
             {
                 StaffMenu();
             }
@@ -187,7 +187,7 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("=============Add New Movie To Collection============");
-            
+
             //Title
             Console.WriteLine("Title:");
             string movieTitle = Console.ReadLine();
@@ -269,7 +269,7 @@ namespace CAB301Project
             Console.WriteLine($"{movie.ToString()}");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
-            
+
             StaffMenu();
 
 
@@ -340,6 +340,56 @@ namespace CAB301Project
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
+        }
+
+        public void RegisterMember()
+        {
+            Console.Clear();
+            Console.WriteLine("=================Register a Member===================\n");
+            Console.Write("First Name: ");
+            string firstName = Console.ReadLine();
+            Console.Write("Last Name: ");
+            string lastName = Console.ReadLine();
+            Console.Write("Contact Number: ");
+            string contactNumber = Console.ReadLine();
+            Console.Write("PIN: ");
+            string pin = Console.ReadLine();
+            Console.WriteLine();
+
+            Member member = new Member(firstName, lastName, contactNumber, pin);
+
+            bool validPhoneNumber = IMember.IsValidContactNumber(member.ContactNumber);
+            bool validPIN = IMember.IsValidPin(member.Pin);
+
+            while (!validPhoneNumber)
+            {
+
+                Console.Write("Please enter a valid contact number: ");
+                string input = Console.ReadLine();
+                member.ContactNumber = input;
+                if (IMember.IsValidContactNumber(member.ContactNumber))
+                    validPhoneNumber = true;
+            }
+
+            while (!validPIN)
+            {
+                Console.Write("Please enter a valid pin: ");
+                string input = Console.ReadLine();
+                member.Pin = input;
+                if (IMember.IsValidPin(member.Pin))
+                    validPIN = true;
+            }
+
+            //Create Member object with valid phone number & pin 
+            Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
+            memberCollection.Add(validMember); 
+            Console.WriteLine($"{validMember.FirstName} succesfully registered.");
+            //Console.WriteLine($"{validMember.FirstName},{validMember.LastName},{validMember.ContactNumber},{validMember.Pin}");
+            Console.WriteLine("Press any key to return to the staff menu.");
+            Console.ReadKey();
+            StaffMenu();
+
+
         }
 
         public void MemberLogin()
