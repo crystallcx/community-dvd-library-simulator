@@ -168,6 +168,36 @@ namespace CAB301Project
             return false;
         }
 
+        // Find a given member in this member collection
+        // Pre-condition: nil
+        // Post-condition: return the reference of the member object in the member collection, if this member is in the member collection; return null otherwise; member collection remains unchanged
+        public IMember Find(IMember member)
+        {
+            int i = 0; //min num
+            int j = count - 1; //max num
+            if (!IsEmpty())
+            {
+                while (i <= j)
+                {
+                    int mid = (i + j) / 2;
+                    if (member.CompareTo(members[mid]) == 0)
+                    {
+                        return members[mid];
+                    }
+                    else if (member.CompareTo(members[mid]) == -1)
+                    {
+                        j = mid - 1;
+                    }
+                    else
+                    {
+                        i = mid + 1;
+                    }
+                }
+            }
+            return null;
+        }
+
+
         // Remove all the members in this member collection
         // Pre-condition: nil
         // Post-condition: no member in this member collection 

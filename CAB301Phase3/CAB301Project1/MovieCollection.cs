@@ -251,13 +251,10 @@ namespace CAB301Project
 		} */
 		public IMovie Search(string movietitle)
 		{
-			//To be completed
 			IMovie result = Search(movietitle, root);
 			return result;
 		}
 
-		// inputs: string, and node.
-		// ouputs: returns an IMovie corresponding to the query string if it exists, else returns null.
 		private IMovie Search(string movietitle, BTreeNode r)
 		{
 			if (r == null) // check twice

@@ -108,7 +108,7 @@ namespace CAB301Project
                         AddMovieToCollection();
                         break;
                     case 2:
-                        RemoveMoviefromCollection();
+                        RemoveDVDs();
                         break;
                     case 3:
                         RegisterMember();
@@ -387,18 +387,63 @@ namespace CAB301Project
                     default:
                         Console.WriteLine("Invalid Input - try again.");
                         break;
-
                 }
             }
         }
 
+        public void RemoveDVDs()
+        {
+            Console.Clear();
+            Console.WriteLine("=============Remove Movie From Collection============\n");
+            IMovie[] movieArray = movieCollection.ToArray();
 
+            Console.WriteLine("Current collection of movies:");
+            if (!movieCollection.IsEmpty())
+            {
+                foreach (IMovie imovie in movieArray)
+                {
+                    Console.WriteLine($"{imovie.ToString()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No movies exist in the movie collection.");
+                Console.WriteLine("Press any key to return to the staff menu.");
+                Console.ReadKey();
+                StaffMenu();
+            }
 
+            Console.WriteLine("=====================================================\n" +
+                              "\nEnter the title of the movie for DVDs to be removed from:");
+
+            bool validMovieChecker = false;
+            while (validMovieChecker == false)
+            {
+                string movieTitlePrompt = Console.ReadLine();
+                Console.WriteLine();
+                Movie movie = (Movie)movieCollection.Search(movieTitlePrompt);
+                if (movie != null)
+                {
+                    Console.WriteLine($"Movie {movie.Title} exists. Total copies = {movie.TotalCopies}.");
+                    Console.WriteLine("Enter number of DVDs to be removed:");
+                    string DVDPrompt = Console.ReadLine();
+                    int.TryParse(DVDPrompt, out int DVDnumber);
+                    movie.AvailableCopies = movie.AvailableCopies - DVDnumber;
+                    Console.WriteLine($"{DVDnumber} DVDs removed for {movie.Title}.");
+                    if(movie.TotalCopies <= 0)
+                    {
+                        movieCollection.Delete(movie);
+                    }
+                    Console.WriteLine("\nPress any key to continue...");
+                    Console.ReadKey();
+                    StaffMenu();
+                    break;
+                }
+            }
+        }
 
         public void RemoveMoviefromCollection()
         {
-            /* add case insensitivity */
-
             Console.Clear();
             Console.WriteLine("=============Remove Movie From Collection============\n");
             IMovie[] movieArray = movieCollection.ToArray();
@@ -615,25 +660,22 @@ namespace CAB301Project
 
 
 
-        public void DisplayMemberContact()
+        public void DisplayMemberContact() /*in progress */
         {
             Console.Clear();
             Console.WriteLine("========= Obtain a Member's Contact Number ==========");
+            Console.WriteLine(memberCollection.ToString());
+            Console.WriteLine("=====================================================\n");
             Console.WriteLine("Please enter a member's first name:");
             string memberFirstName = Console.ReadLine();
             Console.WriteLine("Please enter a member's last name:");
             string memberLastName = Console.ReadLine();
 
-            Member member = new Member(memberFirstName, memberLastName);
-            bool validMember = memberCollection.Search(member);
-            if (!memberCollection.IsEmpty())
-            {
-                for(int i = 0; i < memberCollection.Number; i++)
-                {
-                    Console.WriteLine(1);
-                    //unsure
-                }
-            }
+            Member tempmember = new Member(memberFirstName, memberLastName);
+            bool validMember = memberCollection.Search(tempmember);
+
+
+            Console.WriteLine(memberCollection.Find(tempmember).ContactNumber);
 
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
