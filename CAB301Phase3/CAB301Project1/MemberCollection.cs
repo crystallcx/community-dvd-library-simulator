@@ -186,6 +186,7 @@ namespace CAB301Project
                     int mid = (i + j) / 2;
                     if (member.CompareTo(members[mid]) == 0)
                     {
+                        Console.WriteLine($"Member {member.ToString()} Found! - find method memebercollection");
                         return members[mid];
                     }
                     else if (member.CompareTo(members[mid]) == -1)
@@ -198,6 +199,7 @@ namespace CAB301Project
                     }
                 }
             }
+            Console.WriteLine($"Member {member.ToString()} NOT Found! - find method memebercollection ERROR");
             return null;
         }
 

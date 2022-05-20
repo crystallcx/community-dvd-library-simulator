@@ -44,6 +44,17 @@ namespace CAB301Project
             movie2.AddBorrower(member1);
         }
 
+
+
+
+
+
+
+
+
+
+
+
         public void MainMenu()
         {
             Initalise(); /*   delete this line later   */
@@ -88,6 +99,16 @@ namespace CAB301Project
             }
         }
 
+
+
+
+
+
+
+
+
+
+
         public void StaffMenu()
         {
             Console.Clear();
@@ -110,7 +131,7 @@ namespace CAB301Project
                         AddMovieToCollection();
                         break;
                     case 2:
-                        RemoveDVDs();
+                        RemoveMoviefromCollection();
                         break;
                     case 3:
                         RegisterMember();
@@ -141,6 +162,20 @@ namespace CAB301Project
                 MainMenu();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void MemberMenu()
         {
@@ -195,6 +230,19 @@ namespace CAB301Project
                 MainMenu();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void StaffLogin()
         {
             Console.Clear();
@@ -214,6 +262,21 @@ namespace CAB301Project
                 MainMenu();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void AddMovieToCollection()
         {
@@ -393,6 +456,18 @@ namespace CAB301Project
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         public void RemoveDVDs()
         {
             Console.Clear();
@@ -444,6 +519,16 @@ namespace CAB301Project
             }
         }
 
+
+
+
+
+
+
+
+
+
+
         public void RemoveMoviefromCollection()
         {
             Console.Clear();
@@ -482,29 +567,39 @@ namespace CAB301Project
                     bool validReviewInput = false;
                     while (validReviewInput == false)
                     {
-                        Console.Clear();
-                        Console.Write("========== Confirm Delete Movie ==========\n\n");
-                        Console.WriteLine(movie.ToString().Replace(',', '\n'));
-                        Console.WriteLine("\n To DELETE this movie, press 'Y' or Press or press 'N' to exit ");
-                        string choice = Console.ReadLine();
-                        switch (choice.ToLower())
+                        if (movie.TotalCopies == movie.AvailableCopies)
                         {
-                            case "y":
-                                Console.WriteLine($"\n{movie.Title} has successfully been deleted from the movie collection.");
-                                movieCollection.Delete(movie);
-                                Console.WriteLine("\nPress any key to continue...");
-                                Console.ReadKey();
-                                StaffMenu();
-                                break;
-                            case "n":
-                                Console.WriteLine("\n Cancelling...");
-                                Console.WriteLine("\nPress any key to continue...");
-                                Console.ReadKey();
-                                StaffMenu();
-                                break;
-                            default:
-                                Console.WriteLine("Invalid Input - try again.");
-                                break;
+                            Console.Clear();
+                            Console.Write("========== Confirm Delete Movie ==========\n\n");
+                            Console.WriteLine(movie.ToString().Replace(',', '\n'));
+                            Console.WriteLine("\n To DELETE this movie, press 'Y' or Press or press 'N' to exit ");
+                            string choice = Console.ReadLine();
+                            switch (choice.ToLower())
+                            {
+                                case "y":
+                                    Console.WriteLine($"\n{movie.Title} has successfully been deleted from the movie collection.");
+                                    movieCollection.Delete(movie);
+                                    Console.WriteLine("\nPress any key to continue...");
+                                    Console.ReadKey();
+                                    StaffMenu();
+                                    break;
+                                case "n":
+                                    Console.WriteLine("\n Cancelling...");
+                                    Console.WriteLine("\nPress any key to continue...");
+                                    Console.ReadKey();
+                                    StaffMenu();
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Input - try again.");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Unable to Delete {movie.Title} - Copies of the movie are currently rented out.");
+                            Console.WriteLine("Press any key to continue...");
+                            Console.ReadKey();
+                            StaffMenu();
                         }
                     }
                     
@@ -522,6 +617,15 @@ namespace CAB301Project
             StaffMenu();
         }
         
+
+
+
+
+
+
+
+
+        //Resgtier Member method to register a member with the system
         public void RegisterMember()
         {
             Console.Clear();
@@ -598,6 +702,17 @@ namespace CAB301Project
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
         public void DeleteRegisteredMember()
         {
             /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
@@ -623,7 +738,6 @@ namespace CAB301Project
                 member = new Member(firstName, lastName);
                 validMember = memberCollection.Search(member);
             }
-
             //Review input
             // y for yes, n for no.
             bool validReviewInput = false;
@@ -662,6 +776,12 @@ namespace CAB301Project
 
 
 
+
+
+
+
+
+
         public void DisplayMemberContact() 
         {
             Console.Clear();
@@ -695,6 +815,13 @@ namespace CAB301Project
             Console.ReadKey();
             StaffMenu();
         }
+
+
+
+
+
+
+
 
         public void DisplayMovieBorrowers() /*in progress*/
         {
@@ -745,6 +872,16 @@ namespace CAB301Project
             StaffMenu();
         }
 
+
+
+
+
+
+
+
+
+
+
         public Movie CheckMovieInput()
         {
             Movie validMovie = null;
@@ -767,6 +904,21 @@ namespace CAB301Project
             return validMovie;
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void MemberLogin()
         {
@@ -796,6 +948,20 @@ namespace CAB301Project
             MemberMenu();
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void BrowseAllMovies()
         {
             Console.Clear();
@@ -818,6 +984,16 @@ namespace CAB301Project
             Console.ReadKey();
             MemberMenu();
         }
+
+
+
+
+
+
+
+
+
+
 
         public void DisplayMovieInfo()
         {
@@ -843,6 +1019,12 @@ namespace CAB301Project
             Console.ReadKey();
             MemberMenu();
         }
+
+
+
+
+
+
 
         public void BrowseAllMovies1()
         {
