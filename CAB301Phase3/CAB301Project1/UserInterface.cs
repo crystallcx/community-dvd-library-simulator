@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,8 @@ namespace CAB301Project
         MemberCollection memberCollection = new MemberCollection(10);
         MovieGenre validGenre;
         MovieClassification validClassification;
+        
+
 
         public void Initalise()
         {
