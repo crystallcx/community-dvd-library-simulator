@@ -12,6 +12,8 @@ namespace CAB301Project
         MemberCollection memberCollection = new MemberCollection(10);
         MovieGenre validGenre;
         MovieClassification validClassification;
+        
+
 
         public void Initalise()
         {
@@ -474,7 +476,7 @@ namespace CAB301Project
             Console.ReadKey();
             StaffMenu();
         }
-
+        
         public void RegisterMember()
         {
             Console.Clear();

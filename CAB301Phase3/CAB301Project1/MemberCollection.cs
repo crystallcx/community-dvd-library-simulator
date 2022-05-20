@@ -167,6 +167,10 @@ namespace CAB301Project
             Console.WriteLine($"Member {member.FirstName} {member.LastName} does not exists -- Search = False ");
             return false;
         }
+        private void test1()
+        {
+            return;
+        }
 
         // Remove all the members in this member collection
         // Pre-condition: nil
