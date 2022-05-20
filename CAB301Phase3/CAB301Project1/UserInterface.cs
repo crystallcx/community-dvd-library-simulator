@@ -179,6 +179,8 @@ namespace CAB301Project
 
         public void MemberMenu()
         {
+            Member member1 = new Member("Aone", "Onelast", "0404444544", "4837"); //3
+
             Console.Clear();
             Console.Write("========================Member Menu=========================\n" +
                           " 1. Browse all the movies\n" +
@@ -202,16 +204,16 @@ namespace CAB301Project
                         DisplayMovieInfo();
                         break;
                     case 3:
-                        BorrowMovie();/*something here */
+                        BorrowMovie(member1);/*something here */
                         break;
                     case 4:
-                        /*something here */
+                        ReturnMovie(member1);/*something here */
                         break;
                     case 5:
-                        /*something here */
+                        CurrentlyBorrowed(member1);/*something here */
                         break;
                     case 6:
-                        /*something here */
+                        Top3Movies();/*something here */
                         break;
                     case 0:
                         MainMenu();
@@ -1068,12 +1070,10 @@ namespace CAB301Project
             MemberMenu();
         }
 
-        public void BorrowMovie()
+        public void BorrowMovie(Member member)
         {
             Console.Clear();
             Console.WriteLine("================ Borrow Movie =================\n");
-
-            Member member1 = new Member("Aone", "Onelast", "0404444544", "4837"); //3
             Console.WriteLine("Please enter a movie title:");
             string movie = Console.ReadLine();
             Movie validMovie = (Movie)movieCollection.Search(movie);
@@ -1096,10 +1096,10 @@ namespace CAB301Project
                 switch (choice.ToLower())
                 {
                     case "y":
-                        if (!validMovie.Borrowers.Search(member1))
+                        if (!validMovie.Borrowers.Search(member))
                         {
                             Console.WriteLine($"\n{validMovie.Title} has been successfully borrowed.");
-                            validMovie.AddBorrower(member1);
+                            validMovie.AddBorrower(member);
                         }
                         else
                         {
@@ -1121,6 +1121,107 @@ namespace CAB301Project
                 }
             }
         }
+
+        public void ReturnMovie(Member member)
+        {
+            Console.Clear();
+            Console.WriteLine("================ Return Movie =================\n");
+            Console.Write("Please enter a movie title:");
+            string movie = Console.ReadLine();
+            Movie validMovie = (Movie)movieCollection.Search(movie);
+            while (validMovie == null)
+            {
+                Console.Write("Please enter a valid movie title: ");
+                string smovie = Console.ReadLine();
+                validMovie = (Movie)movieCollection.Search(smovie);
+            }
+
+            bool validReviewInput = false;
+            while (validReviewInput == false)
+            {
+                Console.Clear();
+                Console.Write("========== Confirm Borrow Movie ==========\n\n");
+                Console.WriteLine(validMovie.ToString().Replace(',', '\n'));
+                Console.WriteLine("\n To return this movie, press 'Y' or Press or press 'N' to exit ");
+                string choice = Console.ReadLine();
+                switch (choice.ToLower())
+                {
+                    case "y":
+                        if (validMovie.Borrowers.Search(member))
+                        {
+                            Console.WriteLine($"\n{validMovie.Title} has been successfully returned.");
+                            validMovie.RemoveBorrower(member);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"You don't have {validMovie.Title} on borrow to return.");
+                        }
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        MemberMenu();
+                        break;
+                    case "n":
+                        Console.WriteLine("\n Cancelling...");
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadKey();
+                        MemberMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Input - try again.");
+                        break;
+                }
+            }
+        }
+
+        public void CurrentlyBorrowed(Member member)
+        {
+            Console.Clear();
+            Console.WriteLine("============= Current Borrowing Movies =============\n");
+            IMovie[] movieArray = movieCollection.ToArray();
+
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($"There are currently no movies in the movie collection.");
+                Console.WriteLine("Press any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+
+            foreach (IMovie imovie in movieArray)
+            {
+                if(imovie.Borrowers.Search(member))
+                    Console.WriteLine($"{imovie.ToString()}");
+            }
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+            MemberMenu();
+        }
+
+        public void Top3Movies()
+        {
+            Console.Clear();
+            Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
+            IMovie[] movieArray = movieCollection.ToArray();
+
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($"There are currently no movies in the movie collection.");
+                Console.WriteLine("Press any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+
+            foreach (IMovie imovie in movieArray)
+            {
+                    Console.WriteLine($"{imovie.Title} has been borrowed a number of {imovie.NoBorrowings} times.");
+            }
+
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+            MemberMenu();
+        }
+
 
     }
 }
