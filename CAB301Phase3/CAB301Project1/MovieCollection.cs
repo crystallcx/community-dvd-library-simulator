@@ -230,6 +230,7 @@ namespace CAB301Project
 			}
 		}
 
+		/*
 		// Search for a movie by its title in this movie collection  
 		// pre: nil
 		// post: return the reference of the movie object if the movie is in this movie collection;
@@ -247,8 +248,29 @@ namespace CAB301Project
 			}
 			Console.WriteLine($"Movie {movietitle} does NOT exists! - Search movie by string = False.");
 			return null;
+		} */
+		public IMovie Search(string movietitle)
+		{
+			//To be completed
+			IMovie result = Search(movietitle, root);
+			return result;
 		}
 
+		// inputs: string, and node.
+		// ouputs: returns an IMovie corresponding to the query string if it exists, else returns null.
+		private IMovie Search(string movietitle, BTreeNode r)
+		{
+			if (r == null) // check twice
+				return null;
+			// if comparison is lower go left
+			if (movietitle.ToLower().CompareTo(r.Movie.Title.ToLower()) == -1)
+				return Search(movietitle, r.LChild);
+			// if comparison is higher go right
+			else if (movietitle.ToLower().CompareTo(r.Movie.Title.ToLower()) == 1)
+				return Search(movietitle, r.RChild);
+			else
+				return r.Movie;
+		}
 
 		// Store all the movies in this movie collection in an array in the dictionary order by their titles
 		// Pre-condition: nil

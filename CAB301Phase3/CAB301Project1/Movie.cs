@@ -115,13 +115,27 @@ namespace CAB301Project
         //Post-condition:  return -1, if this movie's title is less than another movie's title by dictionary order
         //                 return 0, if this movie's title equals to another movie's title by dictionary order
         //                 return +1, if this movie's title is greater than another movie's title by dictionary order
-        public int CompareTo(IMovie another)
+        /*public int CompareTo(IMovie another)
         {
             if (this.Title.CompareTo(another.Title) < 0)
                 return -1;
             else
                    if (this.Title.CompareTo(another.Title) == 0)
                 return 0;
+            else
+                return 1;
+        }*/
+        public int CompareTo(IMovie another)
+        {
+            //To be completed
+            if (Title.ToLower().CompareTo(another.Title.ToLower()) < 0)
+            {
+                return -1;
+            }
+            else if (Title.ToLower().CompareTo(another.Title.ToLower()) == 0)
+            {
+                return 0;
+            }
             else
                 return 1;
         }

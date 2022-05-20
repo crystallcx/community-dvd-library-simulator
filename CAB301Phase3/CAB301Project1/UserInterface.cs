@@ -436,7 +436,7 @@ namespace CAB301Project
                     while (validReviewInput == false)
                     {
                         Console.Clear();
-                        Console.Write("==========Confirm Delete Movie ==========\n\n");
+                        Console.Write("========== Confirm Delete Movie ==========\n\n");
                         Console.WriteLine(movie.ToString().Replace(',', '\n'));
                         Console.WriteLine("\n To DELETE this movie, press 'Y' or Press or press 'N' to exit ");
                         string choice = Console.ReadLine();
@@ -553,6 +553,7 @@ namespace CAB301Project
 
         public void DeleteRegisteredMember()
         {
+            /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
             Console.Clear();
             Console.WriteLine("=================Delete a Registered Member===================\n");
             Console.Write("First Name: ");
