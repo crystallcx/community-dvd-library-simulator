@@ -12,7 +12,7 @@ namespace CAB301Project
         MemberCollection memberCollection = new MemberCollection(1000);
         MovieGenre validGenre;
         MovieClassification validClassification;
-
+        List<Member> registeredMembers = new List<Member>();
         public void Initalise()
         {
             Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
@@ -26,17 +26,22 @@ namespace CAB301Project
             movieCollection.Insert(movie4);
             movieCollection.Insert(movie5);
 
-            Member member1 = new Member("Aone", "Onelast", "0404444544", "4837"); //3
-            Member member2 = new Member("Btwo", "Twolast", "0404234444", "4837"); //5
-            Member member3 = new Member("Cthree", "Threelast", "0404445674", "4837"); //4
-            Member member4 = new Member("Dfour", "Fourlast", "0423444444", "4837"); //2
-            Member member5 = new Member("five", "Fivelast", "0404444554", "4837"); //1
+            Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
+            Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
+            Member member3 = new Member("Peter", "Smith", "0404445674", "4837"); //4
+            Member member4 = new Member("John", "Alpha", "0423444444", "4837"); //2
+            Member member5 = new Member("Chris", "Zebra", "0404444554", "4837"); //1
             memberCollection.Add(member1);
             memberCollection.Add(member2);
             memberCollection.Add(member3);
             memberCollection.Add(member4);
             memberCollection.Add(member5);
 
+            registeredMembers.Add(member1);
+            registeredMembers.Add(member2);
+            registeredMembers.Add(member3);
+            registeredMembers.Add(member4);
+            registeredMembers.Add(member5);
             movie2.AddBorrower(member2);
             movie2.AddBorrower(member3);
             movie2.AddBorrower(member1);
@@ -565,50 +570,79 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("=================Register a Member===================\n");
+            //loop till valid first name > 0
             Console.Write("First Name: ");
             string firstName = Console.ReadLine();
             bool validfirstName = firstName.Length > 0;
             while(!validfirstName)
             {
-                Console.WriteLine
+                Console.WriteLine("Please enter a valid First Name (press 0 to exit):");
+                firstName = Console.ReadLine();
+                validfirstName = firstName.Length > 0;
+                if (int.TryParse(firstName, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
             }
-
-
-            Console.Write("Last Name: ");
+            //loop till valid last name > 0
+            Console.Write("\nLast Name: ");
             string lastName = Console.ReadLine();
-
-            Console.Write("Contact Number: ");
-            string contactNumber = Console.ReadLine();
-
-            Console.Write("PIN: ");
-            string pin = Console.ReadLine();
-
-            Console.WriteLine();
-            Member member = new Member(firstName, lastName, contactNumber, pin);
-            bool validPhoneNumber = IMember.IsValidContactNumber(member.ContactNumber);
-            bool validPIN = IMember.IsValidPin(member.Pin);
-
+            bool validLastName = lastName.Length > 0;
+            while (!validLastName)
+            {
+                Console.WriteLine("Please enter a valid Last Name (press 0 to exit):");
+                lastName = Console.ReadLine();
+                validLastName = lastName.Length > 0;
+                if (int.TryParse(lastName, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+            }
             //loop till a valid phone number is given
+            Console.Write("\nContact Number:");
+            string contactNumber = Console.ReadLine();
+            bool validPhoneNumber = IMember.IsValidContactNumber(contactNumber);
             while (!validPhoneNumber)
             {
-                Console.Write("Please enter a valid contact number: ");
-                string input = Console.ReadLine();
-                member.ContactNumber = input;
-                if (IMember.IsValidContactNumber(member.ContactNumber))
+                Console.Write("Please enter a valid contact number (press 0 to exit): ");
+                contactNumber = Console.ReadLine();
+                if (IMember.IsValidContactNumber(contactNumber))
                     validPhoneNumber = true;
+                if (int.TryParse(contactNumber, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
             }
-
             //loop til a valid pin is given
+            Console.Write("\nPIN: ");
+            string pin = Console.ReadLine();
+            bool validPIN = IMember.IsValidPin(pin);
             while (!validPIN)
             {
-                Console.Write("Please enter a valid pin: ");
+                Console.Write("Please enter a valid pin (press 0 to exit): ");
                 string input = Console.ReadLine();
-                member.Pin = input;
-                if (IMember.IsValidPin(member.Pin))
+                if (IMember.IsValidPin(input))
                     validPIN = true;
+                if (int.TryParse(input, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
             }
-            //Create Member object with valid phone number & pin 
-            Member validMember = new Member(firstName, lastName, member.ContactNumber, member.Pin);
+
+            //Create Member object with valid phone number, pin and name 
+            Member validMember = new Member(firstName, lastName, contactNumber, pin);
 
             //Review input
             // y for yes, n for no.
@@ -617,12 +651,13 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Add Member ==========\n\n");
-                Console.WriteLine(validMember.ToString().Replace(',', '\n'));
+                Console.WriteLine($" Frist Name: {validMember.FirstName} \n Last Name: {validMember.LastName} \n Ph: { validMember.ContactNumber} \n Pin: { validMember.Pin}");
                 Console.WriteLine("\n To add this member, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch (choice.ToLower())
                 {
                     case "y":
+                        registeredMembers.Add(validMember);
                         memberCollection.Add(validMember);
                         Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
                         Console.WriteLine("\nPress any key to continue...");
@@ -654,7 +689,19 @@ namespace CAB301Project
             /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
             Console.Clear();
             Console.WriteLine("=================Delete a Registered Member===================\n");
-            Console.Write("First Name: ");
+            Console.WriteLine("Members found in collection (Last name, First name):\n");
+
+            //registeredMembers.Sort();
+            //can delete this if we dont like but it prints all members in this collection to the screen with all details but not in order so we can delete
+            Console.WriteLine(memberCollection.ToString());
+            /*
+            for (int i = 0; i < registeredMembers.Count; i++)
+            {
+                Console.WriteLine($"{i+1}) {registeredMembers[i].FirstName} {registeredMembers[i].LastName}," +
+                    $" Ph: {registeredMembers[i].ContactNumber} Pin: {registeredMembers[i].Pin}\n");
+            }
+            */
+            Console.Write("\nFirst Name: ");
             string firstName = Console.ReadLine();
             Console.Write("Last Name: ");
             string lastName = Console.ReadLine();
@@ -681,7 +728,7 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Delete Member ==========\n\n");
-                Console.WriteLine(member.ToString().Replace(',', '\n'));
+                Console.WriteLine(member.ToString().Replace(',', '\n') + "\n Ph: " + member.ContactNumber + "\n Pin:" + member.Pin);
                 Console.WriteLine("\n To DELETE this member, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch (choice.ToLower())
