@@ -9,8 +9,6 @@ namespace CAB301Project
 {
 	public interface IMovieCollection
 	{
-
-
 		// get the number of (different) movies in this movie collection
 		int Number
 		{
@@ -21,7 +19,6 @@ namespace CAB301Project
 		// Pre-condition: nil
 		// Post-condition: return true if this movie collection is empty; otherwise, return false.
 		bool IsEmpty();
-
 
 		// Insert a movie into this movie collection
 		// Pre-condition: nil
@@ -45,7 +42,6 @@ namespace CAB301Project
 		//	     otherwise, return null.
 		public IMovie Search(string title);
 
-
 		// Store all the movies in this movie collection in an array in the dictionary order by their titles
 		// Pre-condition: nil
 		// Post-condition: return an array of movies that are stored in dictionary order by their titles
@@ -55,7 +51,5 @@ namespace CAB301Project
 		// Pre-condotion: nil
 		// Post-condition: all the movies have been removed from this movie collection 
 		void Clear();
-
 	}
-
 }

@@ -151,7 +151,7 @@ namespace CAB301Project
                     int mid = (i + j) / 2;
                     if (temp.CompareTo(members[mid]) == 0)
                     {
-                        Console.WriteLine($"Member Exists: {members[mid].FirstName} {members[mid].LastName} --- Search = True");
+                        //Console.WriteLine($"Member Exists: {members[mid].FirstName} {members[mid].LastName} --- Search = True");
                         return true;
                     }
                     else if (temp.CompareTo(members[mid]) == -1)
@@ -164,12 +164,8 @@ namespace CAB301Project
                     }
                 }
             }
-            Console.WriteLine($"Member {member.FirstName} {member.LastName} does not exists -- Search = False ");
+            //Console.WriteLine($"Member {member.FirstName} {member.LastName} does not exists -- Search = False ");
             return false;
-        }
-        private void test1()
-        {
-            return;
         }
 
         // Find a given member in this member collection
@@ -226,12 +222,6 @@ namespace CAB301Project
             for (int i = 0; i < count; i++)
                 s = s + members[i].ToString() + "\n";
             return s;
-        }
-
-        public void printMemColl()
-        {
-            for (int i = 0; i < count; i++)
-                Console.Write($"{members[i].ToString()} \n");
         }
     }
 }

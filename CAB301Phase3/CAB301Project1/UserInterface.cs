@@ -12,39 +12,55 @@ namespace CAB301Project
         MemberCollection memberCollection = new MemberCollection(1000);
         MovieGenre validGenre;
         MovieClassification validClassification;
-        List<Member> registeredMembers = new List<Member>();
-        public void Initalise()
+        IMember CurrentlyLoggedInUser;
+
+        List<Member> registeredMembers = new List<Member>();//to delete
+        public void Initalise()//to delete
         {
             Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 6);
             Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie7 = new Movie("Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             movieCollection.Insert(movie1);
             movieCollection.Insert(movie2);
             movieCollection.Insert(movie3);
             movieCollection.Insert(movie4);
             movieCollection.Insert(movie5);
+            movieCollection.Insert(movie6);
+            movieCollection.Insert(movie7);
 
             Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
             Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
             Member member3 = new Member("Peter", "Smith", "0404445674", "4837"); //4
-            Member member4 = new Member("John", "Alpha", "0423444444", "4837"); //2
+            Member member4 = new Member("John", "Alpha", "0423444441", "4837"); //2
             Member member5 = new Member("Chris", "Zebra", "0404444554", "4837"); //1
+            Member member6 = new Member("James", "Wyatt", "0422977674", "1313"); //1
             memberCollection.Add(member1);
             memberCollection.Add(member2);
             memberCollection.Add(member3);
             memberCollection.Add(member4);
             memberCollection.Add(member5);
+            memberCollection.Add(member6);
 
-            registeredMembers.Add(member1);
-            registeredMembers.Add(member2);
-            registeredMembers.Add(member3);
-            registeredMembers.Add(member4);
-            registeredMembers.Add(member5);
+            registeredMembers.Add(member1);//to delete
+            registeredMembers.Add(member2);//to delete
+            registeredMembers.Add(member3);//to delete
+            registeredMembers.Add(member4);//to delete
+            registeredMembers.Add(member5);//to delete
             movie2.AddBorrower(member2);
             movie2.AddBorrower(member3);
             movie2.AddBorrower(member1);
+
+            movie1.AddBorrower(member6);
+            movie2.AddBorrower(member6);
+            movie3.AddBorrower(member6);
+            movie4.AddBorrower(member6);
+            movie5.AddBorrower(member6);
+            
+
         }
 
 
@@ -181,19 +197,19 @@ namespace CAB301Project
                         DisplayMovieInfo();
                         break;
                     case 3:
-                        BorrowMovie(member);/*something here */
+                        BorrowMovie(CurrentlyLoggedInUser);/*something here */
                         break;
                     case 4:
-                        ReturnMovie(member);/*something here */
+                        ReturnMovie(CurrentlyLoggedInUser);/*something here */
                         break;
                     case 5:
-                        CurrentlyBorrowed(member);/*something here */
+                        CurrentlyBorrowed(CurrentlyLoggedInUser);/*something here */
                         break;
                     case 6:
                         Top3Movies();/*something here */
                         break;
                     case 0:
-                        MainMenu();
+                        logout();
                         break;
                     default:
                         Console.WriteLine("Invalid selection. Press any key to continue.");
@@ -234,7 +250,7 @@ namespace CAB301Project
         }
 
 
-
+        //=====================================Staff Menu Methods ====================
         //Add Movie To Collection
         public void AddDvds()
         {
@@ -687,39 +703,67 @@ namespace CAB301Project
         public void DeleteRegisteredMember()
         {
             /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
-            Console.Clear();
-            Console.WriteLine("=================Delete a Registered Member===================\n");
+            Console.Clear(); 
+            Console.WriteLine("================= Delete a Registered Member ===================\n");
             Console.WriteLine("Members found in collection (Last name, First name):\n");
-
-            //registeredMembers.Sort();
-            //can delete this if we dont like but it prints all members in this collection to the screen with all details but not in order so we can delete
             Console.WriteLine(memberCollection.ToString());
-            /*
-            for (int i = 0; i < registeredMembers.Count; i++)
-            {
-                Console.WriteLine($"{i+1}) {registeredMembers[i].FirstName} {registeredMembers[i].LastName}," +
-                    $" Ph: {registeredMembers[i].ContactNumber} Pin: {registeredMembers[i].Pin}\n");
-            }
-            */
-            Console.Write("\nFirst Name: ");
+            Console.WriteLine("=====================================================\n");
+            Console.WriteLine("Please enter a valid member from the collection:");
+            Console.Write("First Name: ");
             string firstName = Console.ReadLine();
             Console.Write("Last Name: ");
             string lastName = Console.ReadLine();
 
             Console.WriteLine();
             Member member = new Member(firstName, lastName);
-            bool validMember = memberCollection.Search(member);
-            while (!validMember)
+            IMember validMember = memberCollection.Find(member);
+            //bool validMember = memberCollection.Search(member);
+            while (validMember == null)
             {
-
+                Console.WriteLine("Please enter a valid member from the collection (press 0 to quit): ");
                 Console.Write("First Name: ");
                 firstName = Console.ReadLine();
+                if (int.TryParse(firstName, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
                 Console.Write("Last Name: ");
                 lastName = Console.ReadLine();
-                //may need to add here to break out of loop
+                if (int.TryParse(lastName, out int quit1))
+                {
+                    if (quit1 == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
                 Console.WriteLine();
                 member = new Member(firstName, lastName);
-                validMember = memberCollection.Search(member);
+                validMember = memberCollection.Find(member);
+                //validMember = memberCollection.Search(member);
+                Console.WriteLine();
+            }
+            bool validInput = false;
+            int counter = 0;
+            IMovie[] tempArray = movieCollection.ToArray();
+            //check if validmember is in any of the borrowers array for each movie in the collection
+            foreach(IMovie movie in tempArray)
+            {
+                if(movie.Borrowers.Search(validMember))
+                {
+                    counter++;
+                    validInput = true;
+                }
+            }
+            if(validInput == true)
+            {
+                Console.WriteLine($"Error - Cannot remove '{validMember.FirstName} {validMember.LastName}' as they have DVDs on borrow.");
+                Console.WriteLine($"Number of DVDs on borrow: {counter}");
+                Console.WriteLine("\nPress any key to return to the staff menu.");
+                Console.ReadKey();
+                StaffMenu();
             }
             //Review input
             // y for yes, n for no.
@@ -728,7 +772,7 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Delete Member ==========\n\n");
-                Console.WriteLine(member.ToString().Replace(',', '\n') + "\n Ph: " + member.ContactNumber + "\n Pin:" + member.Pin);
+                Console.WriteLine(" " + validMember.FirstName + "\n " + validMember.LastName + "\n Ph:" + validMember.ContactNumber + "\n Pin:" + validMember.Pin);
                 Console.WriteLine("\n To DELETE this member, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch (choice.ToLower())
@@ -763,32 +807,64 @@ namespace CAB301Project
         public void DisplayMemberContact() 
         {
             Console.Clear();
-            Console.WriteLine("========= Obtain a Member's Contact Number ==========");
+            Console.WriteLine("========= Obtain a Member's Contact Number ==========\n");
+            Console.WriteLine("Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
-            Console.Write("Please enter a member's first name:");
+            Console.WriteLine("Please enter a valid member from the collection:");
+            Console.Write("First Name: ");
             string memberFirstName = Console.ReadLine();
-            Console.Write("Please enter a member's last name:");
+            Console.Write("Last Name: ");
             string memberLastName = Console.ReadLine();
 
             Member temp = new Member(memberFirstName, memberLastName);
-            bool validMember = memberCollection.Search(temp);
-
-            while(!validMember)
+            //bool validMember = memberCollection.Search(temp);
+            Console.WriteLine();
+            IMember validMember = memberCollection.Find(temp);
+            Console.WriteLine();
+            while (validMember == null)
             {
-                Console.Write("Please enter an existing member's first name:");
-                string firstName = Console.ReadLine();
-                Console.Write("Please enter an existing member's last name:");
-                string lastName = Console.ReadLine();
-                //may need to add here to break out of loop
+                Console.WriteLine("Please enter a valid member from the collection (press 0 to quit): ");
+                Console.Write("First Name: ");
+                memberFirstName = Console.ReadLine();
+                if (int.TryParse(memberFirstName, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+                Console.Write("Last Name: ");
+                memberLastName = Console.ReadLine();
+                if (int.TryParse(memberLastName, out int quit1))
+                {
+                    if (quit1 == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
+                temp = new Member(memberFirstName, memberLastName);
                 Console.WriteLine();
-                temp = new Member(firstName, lastName);
-                validMember = memberCollection.Search(temp);
+                validMember = memberCollection.Find(temp);
+                Console.WriteLine();
             }
-
-            string contactNo = memberCollection.Find(temp).ContactNumber;
-            Console.WriteLine($"{temp.FirstName} {temp.LastName}'s contact number is {contactNo}.\n");
-
+            /*
+        while (!validMember) - to delete
+        {
+            Console.Write("Please enter an existing member's first name:");
+            string firstName = Console.ReadLine();
+            Console.Write("Please enter an existing member's last name:");
+            string lastName = Console.ReadLine();
+            //may need to add here to break out of loop
+            Console.WriteLine();
+            temp = new Member(firstName, lastName);
+            validMember = memberCollection.Search(temp);
+        }
+        */
+            //string contactNo = memberCollection.Find(temp).ContactNumber;
+            Console.WriteLine("=============================================\n");
+            Console.WriteLine($"{temp.FirstName} {temp.LastName}'s contact number is {validMember.ContactNumber}.\n");
+            Console.WriteLine("=============================================\n");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
@@ -797,8 +873,8 @@ namespace CAB301Project
 
 
 
-        //Display movies borrwerd
-        public void DisplayMovieBorrowers() /*in progress*/
+        //Display movies borrowed
+        public void DisplayMovieBorrowers()
         {
             Console.Clear();
             Console.WriteLine("=========== Display Borrowers of a Movie ===============\n");
@@ -809,7 +885,7 @@ namespace CAB301Project
             {
                 foreach (IMovie imovie in movieArray)
                 {
-                    Console.WriteLine($"{imovie.ToString()}");
+                    Console.WriteLine($"{imovie.ToString()}, Total Copies: " + imovie.TotalCopies);
                 }
             }
             else
@@ -826,19 +902,29 @@ namespace CAB301Project
             Movie validMovie = (Movie)movieCollection.Search(movie);
             while (validMovie == null)
             {
-                Console.Write("Please enter a valid movie title: ");
+                Console.Write("\nPlease enter a valid movie title (press 0 to quit): ");
                 string smovie = Console.ReadLine();
                 validMovie = (Movie)movieCollection.Search(smovie);
+                if (int.TryParse(smovie, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        StaffMenu();
+                    }
+                }
             }
-
             if(validMovie.Borrowers.Number == 0)
             {
-                Console.WriteLine($"\nNo one is currently borrowing out {validMovie.Title}.");
+                Console.WriteLine("\n=============================================");
+                Console.WriteLine($"\n No one is currently borrowing out {validMovie.Title}.\n");
+                Console.WriteLine("=============================================\n");
             }
             else
             {
-                Console.WriteLine($"\nList of members currently borrowing out {validMovie.Title}:");
+                Console.WriteLine("\n=============================================");
+                Console.WriteLine($"\nList of members currently borrowing out {validMovie.Title}:\n");
                 Console.WriteLine(validMovie.Borrowers.ToString());
+                Console.WriteLine("=============================================\n");
             }
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
@@ -846,7 +932,7 @@ namespace CAB301Project
         }
 
 
-
+        /* - to delete?
         //Check input
         public Movie CheckMovieInput()
         {
@@ -869,9 +955,9 @@ namespace CAB301Project
             }
             return validMovie;
         }
+        */
 
-
-
+        //=====================================Member Menu Methods ====================
         //Member login - in progress
         public void MemberLogin()
         {
@@ -880,24 +966,48 @@ namespace CAB301Project
             Console.WriteLine("Please enter first name:");
 
             string memberFirstName = Console.ReadLine();            
-
-            //string memberFirstName = Console.ReadLine();
-
             Console.WriteLine("Please enter last name:");
             string memberLastName = Console.ReadLine();
             Console.WriteLine("Please Enter PIN:"); //password
             string memberPIN = Console.ReadLine();
 
-            /* something here 
-            //Member member = new Member(memberFirstName, memberLastName, "", memberPIN);
-            Member member = memberCollection.Search()
+            Member member = new Member(memberFirstName, memberLastName);
+            IMember validMember = memberCollection.Find(member);
+            
+            if (validMember != null)
+            {
+                if(validMember.Pin == memberPIN)
+                {
+                    Console.WriteLine($"Verfication Sucessfull - Now Logging In {validMember.FirstName} {validMember.LastName}.");
+                    CurrentlyLoggedInUser = validMember;
+                    Console.WriteLine("\nPress any key to return to the staff menu.");
+                    Console.ReadKey();
+                    MemberMenu();
+                }
+                else
+                {
+                    Console.WriteLine("Pin Number Not valid.");
+                    Console.WriteLine("\nPress any key to return to the staff menu.");
+                    Console.ReadKey();
+                    MainMenu();
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error - {memberFirstName} {memberLastName} does not exists in this collection.");
+                Console.WriteLine("\nPress any key to return to the staff menu.");
+                Console.ReadKey();
+                MainMenu();
 
-             */
+            }
+
+            /*
             Console.WriteLine("Member login verification has yet to be implemented.\n" +
                               "Press any key to continue to the member menu.");
             Console.ReadKey();
             //Member member = memberCollection.Search(userName, password);
             MemberMenu();
+            */
         }
 
 
@@ -951,60 +1061,109 @@ namespace CAB301Project
 
 
         //Borrow movie
-        public void BorrowMovie(Member member1)
+        public void BorrowMovie(IMember member1)
         {
             Console.Clear();
             Console.WriteLine("================ Borrow Movie =================\n");
-            Console.WriteLine("Please enter a movie title:");
-            string movie = Console.ReadLine();
-            Movie validMovie = (Movie)movieCollection.Search(movie);
-            while (validMovie == null)
+            IMovie[] movieArray = movieCollection.ToArray();
+            int borrowCount = 0;
+            if (movieCollection.IsEmpty())
             {
-                Console.Write("Please enter a valid movie title: ");
-                string smovie = Console.ReadLine();
-                validMovie = (Movie)movieCollection.Search(smovie);
+                Console.WriteLine($"There are currently no movies in the movie collection.");
+                Console.WriteLine("Press any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
             }
-            bool validReviewInput = false;
-            while (validReviewInput == false)
+            Console.WriteLine("Movies currently borrowing:");
+            foreach (IMovie imovie in movieArray)
             {
-                Console.Clear();
-                Console.Write("========== Confirm Borrow Movie ==========\n\n");
-                Console.WriteLine(validMovie.ToString().Replace(',', '\n'));
-                Console.WriteLine("\n To borrow this movie, press 'Y' or Press or press 'N' to exit ");
-                string choice = Console.ReadLine();
-                switch (choice.ToLower())
+                if (imovie.Borrowers.Search(member1))
                 {
-                    case "y":
-                        if (!validMovie.Borrowers.Search(member1))
-                        {
-                            Console.WriteLine($"\n{validMovie.Title} has been successfully borrowed.");
-                            validMovie.AddBorrower(member1);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"You already have {validMovie.Title} on borrow.");
-                        }
-                        Console.WriteLine("\nPress any key to continue...");
-                        Console.ReadKey();
-                        MemberMenu();
-                        break;
-                    case "n":
-                        Console.WriteLine("\n Cancelling...");
-                        Console.WriteLine("\nPress any key to continue...");
-                        Console.ReadKey();
-                        MemberMenu();
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Input - try again.");
-                        break;
+                    Console.WriteLine($"{imovie.ToString()}");
+                    borrowCount++;
                 }
+            }
+            if (borrowCount < 5)
+            {
+                Console.WriteLine("Please enter a movie title:");
+                string movie = Console.ReadLine();
+                Movie validMovie = (Movie)movieCollection.Search(movie);
+                while (validMovie == null)
+                {
+                    Console.Write("Please enter a valid movie title: ");
+                    string smovie = Console.ReadLine();
+                    validMovie = (Movie)movieCollection.Search(smovie);
+                }
+                bool validReviewInput = false;
+                while (validReviewInput == false)
+                {
+                    Console.Clear();
+                    Console.Write("========== Confirm Borrow Movie ==========\n\n");
+                    Console.WriteLine(validMovie.ToString().Replace(',', '\n'));
+                    Console.WriteLine("\n To borrow this movie, press 'Y' or Press or press 'N' to exit ");
+                    string choice = Console.ReadLine();
+                    switch (choice.ToLower())
+                    {
+                        case "y":
+                            if (!validMovie.Borrowers.Search(member1))
+                            {
+                                Console.WriteLine($"\n{validMovie.Title} has been successfully borrowed.");
+                                validMovie.AddBorrower(member1);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"You already have {validMovie.Title} on borrow.");
+                            }
+                            Console.WriteLine("\nPress any key to continue...");
+                            Console.ReadKey();
+                            MemberMenu();
+                            break;
+                        case "n":
+                            Console.WriteLine("\n Cancelling...");
+                            Console.WriteLine("\nPress any key to continue...");
+                            Console.ReadKey();
+                            MemberMenu();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid Input - try again.");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\nYou have {borrowCount} DVDs already borrowed. This is the Maxmimum limit.");
+                Console.WriteLine("Please return a DVD before borrowing another.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+
             }
         }
 
-        public void ReturnMovie(Member member)
+        public void ReturnMovie(IMember member)
         {
             Console.Clear();
             Console.WriteLine("================ Return Movie =================\n");
+            IMovie[] movieArray = movieCollection.ToArray();
+            int borrowCount = 0;
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($"There are currently no movies in the movie collection.");
+                Console.WriteLine("Press any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+            Console.WriteLine("Movies currently borrowing:");
+            foreach (IMovie imovie in movieArray)
+            {
+                if (imovie.Borrowers.Search(member))
+                {
+                    Console.WriteLine($"{imovie.ToString()}");
+                    
+                }
+
+            }
             Console.Write("Please enter a movie title:");
             string movie = Console.ReadLine();
             Movie validMovie = (Movie)movieCollection.Search(movie);
@@ -1019,7 +1178,7 @@ namespace CAB301Project
             while (validReviewInput == false)
             {
                 Console.Clear();
-                Console.Write("========== Confirm Borrow Movie ==========\n\n");
+                Console.Write("========== Confirm Return Movie ==========\n\n");
                 Console.WriteLine(validMovie.ToString().Replace(',', '\n'));
                 Console.WriteLine("\n To return this movie, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
@@ -1051,8 +1210,9 @@ namespace CAB301Project
                 }
             }
         }
+        
 
-        public void CurrentlyBorrowed(Member member)
+        public void CurrentlyBorrowed(IMember member)
         {
             Console.Clear();
             Console.WriteLine("============= Current Borrowing Movies =============\n");
@@ -1122,6 +1282,14 @@ namespace CAB301Project
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
+        }
+        public void logout()
+        {
+            Console.WriteLine($"Logging out {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName}");
+            CurrentlyLoggedInUser = null;
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            MainMenu();
         }
     }
 }
