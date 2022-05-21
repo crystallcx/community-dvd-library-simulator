@@ -151,6 +151,8 @@ namespace CAB301Project
         //Member menu
         public void MemberMenu()
         {
+            Member member = new Member("Aone", "Onelast", "0404444544", "4837"); //3
+
             Console.Clear();
             Console.Write("========================Member Menu=========================\n" +
                           " 1. Browse all the movies\n" +
@@ -174,16 +176,16 @@ namespace CAB301Project
                         DisplayMovieInfo();
                         break;
                     case 3:
-                        BorrowMovie();/*something here */
+                        BorrowMovie(member);/*something here */
                         break;
                     case 4:
-                        /*something here */
+                        ReturnMovie(member);/*something here */
                         break;
                     case 5:
-                        /*something here */
+                        CurrentlyBorrowed(member);/*something here */
                         break;
                     case 6:
-                        /*something here */
+                        Top3Movies();/*something here */
                         break;
                     case 0:
                         MainMenu();
@@ -951,11 +953,10 @@ namespace CAB301Project
 
 
         //Borrow movie
-        public void BorrowMovie()
+        public void BorrowMovie(Member member1)
         {
             Console.Clear();
             Console.WriteLine("================ Borrow Movie =================\n");
-            Member member1 = new Member("Aone", "Onelast", "0404444544", "4837"); //3
             Console.WriteLine("Please enter a movie title:");
             string movie = Console.ReadLine();
             Movie validMovie = (Movie)movieCollection.Search(movie);
@@ -1091,23 +1092,28 @@ namespace CAB301Project
 
 
             MovieCollection Collectiontemp = movieCollection;
-            IMovie[] movieArray = Collectiontemp.ToArray();
 
-
-
-            int? maxVal = null; //nullable so this works even if you have all super-low negatives
-            int index = -1;
-            for (int i = 0; i < movieArray.Length; i++)
+            for (int j = 0; j < 3; j++)
             {
-                int thisNum = movieArray[i].NoBorrowings;
-                if (!maxVal.HasValue || thisNum > maxVal.Value)
+                IMovie[] movieArray = Collectiontemp.ToArray();
+
+                int? maxVal = null; //nullable so this works even if you have all super-low negatives
+                int index = -1;
+                int i;
+                for (i = 0; i < movieArray.Length; i++)
                 {
-                    maxVal = thisNum;
-                    index = i;
+                    int thisNum = movieArray[i].NoBorrowings;
+                    if (!maxVal.HasValue || thisNum > maxVal.Value)
+                    {
+                        maxVal = thisNum;
+                        index = i;
+                    }
                 }
+                Console.WriteLine($"{movieArray[index].ToString()}");
+
+//                Collectiontemp.Delete(movieArray[index]);
             }
 
-            Console.WriteLine($"{movieArray[index].Title}");
 
             //  foreach (int top in large)
             //   {
