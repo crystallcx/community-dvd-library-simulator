@@ -9,7 +9,7 @@ namespace CAB301Project
     class UserInterface
     {
         MovieCollection movieCollection = new MovieCollection();
-        MemberCollection memberCollection = new MemberCollection(10);
+        MemberCollection memberCollection = new MemberCollection(1000);
         MovieGenre validGenre;
         MovieClassification validClassification;
 
@@ -111,7 +111,7 @@ namespace CAB301Project
                 switch (choice)
                 {
                     case 1:
-                        AddMovieToCollection();
+                        AddDvds();
                         break;
                     case 2:
                         RemoveDVDs();
@@ -231,7 +231,7 @@ namespace CAB301Project
 
 
         //Add Movie To Collection
-        public void AddMovieToCollection()
+        public void AddDvds()
         {
             Console.Clear();
             Console.WriteLine("============= Add DVDs to a Movie or new Movie to this Collection ============");
@@ -261,13 +261,15 @@ namespace CAB301Project
             Movie validMovie = (Movie)movieCollection.Search(validMovieTitle);
             if(validMovie != null)
             {
-                Console.Write($"\nMovie '{validMovie.Title}' Found in this Collection.");
+                Console.Write($"\nMovie Found in this Collection:\n\n");
+                Console.WriteLine($"{validMovie.ToString().Replace(',', '\n')} \n Total Copies: {validMovie.TotalCopies}");
                 Console.WriteLine("\nPlease enter amount of DVDs to add for this movie.");
                 string smovie = Console.ReadLine();
                 bool validCount = int.TryParse(smovie, out int addCount);
+                validCount = addCount > 0;
                 while (validCount == false)
                 {
-                    Console.WriteLine("\nInvalid Input, Try again. Press 0 to exit.");
+                    Console.WriteLine("\nInvalid Input, must be greater than 0 and numeric. Press 0 to exit.");
                     Console.WriteLine("Please enter amount of DVDs to add for this movie:");
                     smovie = Console.ReadLine();
                     int.TryParse(smovie, out addCount);
@@ -290,6 +292,11 @@ namespace CAB301Project
                     Console.ReadKey();
                     StaffMenu();
                 }
+            }
+            else
+            {
+                Console.WriteLine($"\nMovie '{movieTitlePrompt}' is not found in this Collection.");
+                Console.WriteLine($"Please enter the new details of '{movieTitlePrompt}'");
             }
 
             //Genre
@@ -407,6 +414,8 @@ namespace CAB301Project
                 }
             }
             int validMovieCopies = movieCopies;
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
             Movie movie = new Movie(validMovieTitle, validGenre, validClassification, validMovieDuration, validMovieCopies);
             //Review input
             // y for yes, n for no.
@@ -448,7 +457,7 @@ namespace CAB301Project
             Console.WriteLine("=============Remove DVDs from a Movie in the Collection============\n");
             IMovie[] movieArray = movieCollection.ToArray();
 
-            Console.WriteLine("Current collection of movies:");
+            Console.WriteLine("Current collection of movies:\n");
             if (!movieCollection.IsEmpty())
             {
                 foreach (IMovie imovie in movieArray)
@@ -463,14 +472,14 @@ namespace CAB301Project
                 Console.ReadKey();
                 StaffMenu();
             }
-            Console.WriteLine("=====================================================\n");
+            Console.WriteLine("\n=====================================================\n");
             Console.Write("Please enter a movie title: ");
             string movie = Console.ReadLine();
 
             Movie validMovie = (Movie)movieCollection.Search(movie);
             while (validMovie == null)
             {
-                Console.Write("Please enter a valid movie title (Press 0 to Exit): ");
+                Console.Write("\nPlease enter a valid movie title (Press 0 to Exit): ");
                 string smovie = Console.ReadLine();
                 validMovie = (Movie)movieCollection.Search(smovie);
                 if (int.TryParse(smovie, out int quit))
@@ -483,14 +492,14 @@ namespace CAB301Project
             }
             if (validMovie.AvailableCopies > 0)
             {
-                Console.Write("Enter number of DVDs to be removed:");
+                Console.Write("\nEnter number of DVDs to be removed:");
                 string DVDPrompt = Console.ReadLine();
                 bool validNum = int.TryParse(DVDPrompt, out int DVDnumber);
              
                 //Assume DVDs being borrowed cannot be deleted
                 while (!validNum || !(1 <= DVDnumber && DVDnumber <= validMovie.AvailableCopies))
                 {
-                    Console.Write($"Please enter a number between 1 and {validMovie.AvailableCopies} (Press 0 to Exit): ");
+                    Console.Write($"\nPlease enter a number between 1 and {validMovie.AvailableCopies} (Press 0 to Exit): ");
                     string prompt = Console.ReadLine();
                     validNum = int.TryParse(prompt, out DVDnumber);
 
@@ -502,17 +511,38 @@ namespace CAB301Project
                         }
                     }
                 }
+                //can delete this if u dont like
+                int validNum1 = validMovie.TotalCopies - DVDnumber;
+                if(validMovie.TotalCopies == 1 || validNum1 == 0)
+                {
+                    bool validinput = false;
+                    while(!validinput)
+                    {
+                        Console.WriteLine("Warning! - Removing the last copy of a DVD from a movie will remove the movie from the collection." +
+                            "\n Press 'Y' continue or Press or press 'N' to exit ");
+                        string choice = Console.ReadLine();
+                        choice.ToLower();
+                        if (choice == "y")
+                        {
+                            validinput = true;
+                        }
+                        if (choice == "n")
+                        {
+                            StaffMenu();
+                        }
+                    }
+                }
                 //Decrement Total Copies and Available Copies Count
                 validMovie.TotalCopies = validMovie.TotalCopies - DVDnumber;
                 validMovie.AvailableCopies = validMovie.AvailableCopies - DVDnumber;
-                Console.WriteLine($"\n{DVDnumber} DVD copies removed from Movie {validMovie.Title}.\n");
-                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for {validMovie.Title}, " +
+                Console.WriteLine($"\n{DVDnumber} DVD copies removed from Movie '{validMovie.Title}'.\n");
+                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
                                   $"with {validMovie.TotalCopies - validMovie.AvailableCopies} currently on borrow.");
             }
             else
             {
-                Console.WriteLine($"\nError - There is no aviable copies to remove.");
-                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for {validMovie.Title}, " +
+                Console.WriteLine($"\nError - There is no available copies to remove.");
+                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
                                   $"with {validMovie.TotalCopies - validMovie.AvailableCopies} currently on borrow.");
                 Console.WriteLine("\nPress any key to return to the staff menu.");
                 Console.ReadKey();
@@ -520,102 +550,13 @@ namespace CAB301Project
             }
             if (validMovie.TotalCopies == 0)
             {
-                Console.WriteLine($"Movie {validMovie.Title} has been removed from the system as there are no copies left.");
+                Console.WriteLine($"\nMovie '{validMovie.Title}' has been removed from the system as there are no copies left.");
                 movieCollection.Delete(validMovie);
             }
             Console.WriteLine("\nPress any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
         }
-
-        /* - to delete
-        public void RemoveMoviefromCollection()
-        {
-            Console.Clear();
-            Console.WriteLine("=============Remove Movie From Collection============\n");
-            IMovie[] movieArray = movieCollection.ToArray();
-
-            Console.WriteLine("Current collection of movies:");
-            if (!movieCollection.IsEmpty())
-            {
-                foreach (IMovie imovie in movieArray)
-                {
-                    Console.WriteLine($"{imovie.ToString()}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No movies exist in the movie collection.");
-                Console.WriteLine("Press any key to return to the staff menu.");
-                Console.ReadKey();
-                StaffMenu();
-            }
-            Console.WriteLine("=====================================================\n" +
-                              "\nEnter the title of the movie to be removed:");
-
-            bool validMovieChecker = false;
-            while (validMovieChecker == false)
-            {
-                string movieTitlePrompt = Console.ReadLine();
-                Console.WriteLine();
-                Movie movie = (Movie)movieCollection.Search(movieTitlePrompt);
-                if (movie != null)
-                {
-                    //Review input
-                    // y for yes, n for no.
-                    bool validReviewInput = false;
-                    while (validReviewInput == false)
-                    {
-                        if (movie.TotalCopies == movie.AvailableCopies)
-                        {
-                            Console.Clear();
-                            Console.Write("========== Confirm Delete Movie ==========\n\n");
-                            Console.WriteLine(movie.ToString().Replace(',', '\n'));
-                            Console.WriteLine("\n To DELETE this movie, press 'Y' or Press or press 'N' to exit ");
-                            string choice = Console.ReadLine();
-                            switch (choice.ToLower())
-                            {
-                                case "y":
-                                    Console.WriteLine($"\n{movie.Title} has successfully been deleted from the movie collection.");
-                                    movieCollection.Delete(movie);
-                                    Console.WriteLine("\nPress any key to continue...");
-                                    Console.ReadKey();
-                                    StaffMenu();
-                                    break;
-                                case "n":
-                                    Console.WriteLine("\n Cancelling...");
-                                    Console.WriteLine("\nPress any key to continue...");
-                                    Console.ReadKey();
-                                    StaffMenu();
-                                    break;
-                                default:
-                                    Console.WriteLine("Invalid Input - try again.");
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Unable to Delete {movie.Title} - Copies of the movie are currently rented out.");
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
-                            StaffMenu();
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    Console.WriteLine($"Movie {movieTitlePrompt} does not exist in the movie collection, please try again or enter 0 to quit.");
-                    Console.WriteLine("Enter the title of the movie to be removed:");
-                    if (movieTitlePrompt == "0")
-                        StaffMenu();
-                }
-            }
-            Console.WriteLine("Press any key to return to the staff menu.");
-            Console.ReadKey();
-            StaffMenu();
-        }
-        */
 
 
 
@@ -626,12 +567,22 @@ namespace CAB301Project
             Console.WriteLine("=================Register a Member===================\n");
             Console.Write("First Name: ");
             string firstName = Console.ReadLine();
+            bool validfirstName = firstName.Length > 0;
+            while(!validfirstName)
+            {
+                Console.WriteLine
+            }
+
+
             Console.Write("Last Name: ");
             string lastName = Console.ReadLine();
+
             Console.Write("Contact Number: ");
             string contactNumber = Console.ReadLine();
+
             Console.Write("PIN: ");
             string pin = Console.ReadLine();
+
             Console.WriteLine();
             Member member = new Member(firstName, lastName, contactNumber, pin);
             bool validPhoneNumber = IMember.IsValidContactNumber(member.ContactNumber);
@@ -806,7 +757,7 @@ namespace CAB301Project
             Console.WriteLine("=========== Display Borrowers of a Movie ===============\n");
             IMovie[] movieArray = movieCollection.ToArray();
 
-            Console.WriteLine("Current collection of movies:");
+            Console.WriteLine("Current collection of movies:\n");
             if (!movieCollection.IsEmpty())
             {
                 foreach (IMovie imovie in movieArray)
@@ -821,7 +772,7 @@ namespace CAB301Project
                 Console.ReadKey();
                 StaffMenu();
             }
-            Console.WriteLine("=====================================================\n");
+            Console.WriteLine("\n=====================================================\n");
             Console.Write("Please enter a movie title: ");
             string movie = Console.ReadLine();
 
