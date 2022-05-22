@@ -87,12 +87,14 @@ namespace CAB301Project
                     }
                     members[j + 1] = temp;
                     count++;
-                    Console.WriteLine($"Adding New member: {member.FirstName} {member.LastName} ");
+                    //debug
+                    //Console.WriteLine($"Adding New member: {member.FirstName} {member.LastName} ");
                     return;
                 }
                 else
                 {
-                    Console.WriteLine($"{member.FirstName} {member.LastName} Member Already Existis - ADD ERROR MESSAGE");
+                    //debug
+                    //Console.WriteLine($"{member.FirstName} {member.LastName} Member Already Existis - ADD ERROR MESSAGE");
                     return;
                 }
             }
@@ -121,12 +123,14 @@ namespace CAB301Project
             }
             if (i == count || IsEmpty())
             {
-                Console.WriteLine($"{aMember.FirstName} {aMember.LastName} That member does not exist! - DELETE ERROR MESSAGE");
+                //debug
+                //Console.WriteLine($"{aMember.FirstName} {aMember.LastName} That member does not exist! - DELETE ERROR MESSAGE");
                 return;
             }
             else if (i != count)
             {
-                Console.WriteLine($"\nDELETING MEMBER: {members[i].FirstName} {members[i].LastName}\n");
+                //debug
+                //Console.WriteLine($"\nDELETING MEMBER: {members[i].FirstName} {members[i].LastName}\n");
                 for (int j = i + 1; j < count; j++)
                 {
                     members[j - 1] = members[j];
@@ -151,6 +155,7 @@ namespace CAB301Project
                     int mid = (i + j) / 2;
                     if (temp.CompareTo(members[mid]) == 0)
                     {
+                        //debug
                         //Console.WriteLine($"Member Exists: {members[mid].FirstName} {members[mid].LastName} --- Search = True");
                         return true;
                     }
@@ -164,6 +169,7 @@ namespace CAB301Project
                     }
                 }
             }
+            //debug
             //Console.WriteLine($"Member {member.FirstName} {member.LastName} does not exists -- Search = False ");
             return false;
         }
@@ -182,7 +188,8 @@ namespace CAB301Project
                     int mid = (i + j) / 2;
                     if (member.CompareTo(members[mid]) == 0)
                     {
-                        Console.WriteLine($"Member {member.ToString()} Found! - find method memebercollection");
+                        //debug
+                        //Console.WriteLine($"Member {member.ToString()} Found! - find method memebercollection");
                         return members[mid];
                     }
                     else if (member.CompareTo(members[mid]) == -1)
@@ -195,7 +202,8 @@ namespace CAB301Project
                     }
                 }
             }
-            Console.WriteLine($"Member {member.ToString()} NOT Found! - find method memebercollection ERROR");
+            //debug
+            //Console.WriteLine($"Member {member.ToString()} NOT Found! - find method memebercollection ERROR");
             return null;
         }
 

@@ -14,11 +14,10 @@ namespace CAB301Project
         MovieClassification validClassification;
         IMember CurrentlyLoggedInUser;
 
-        List<Member> registeredMembers = new List<Member>();//to delete
         public void Initalise()//to delete
         {
             Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 6);
+            Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 4);
             Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
@@ -38,18 +37,15 @@ namespace CAB301Project
             Member member4 = new Member("John", "Alpha", "0423444441", "4837"); //2
             Member member5 = new Member("Chris", "Zebra", "0404444554", "4837"); //1
             Member member6 = new Member("James", "Wyatt", "0422977674", "1313"); //1
+            Member member7 = new Member("Jane", "Smith", "0422977674", "1414"); //1
             memberCollection.Add(member1);
             memberCollection.Add(member2);
             memberCollection.Add(member3);
             memberCollection.Add(member4);
             memberCollection.Add(member5);
             memberCollection.Add(member6);
+            memberCollection.Add(member7);
 
-            registeredMembers.Add(member1);//to delete
-            registeredMembers.Add(member2);//to delete
-            registeredMembers.Add(member3);//to delete
-            registeredMembers.Add(member4);//to delete
-            registeredMembers.Add(member5);//to delete
             movie2.AddBorrower(member2);
             movie2.AddBorrower(member3);
             movie2.AddBorrower(member1);
@@ -59,8 +55,8 @@ namespace CAB301Project
             movie3.AddBorrower(member6);
             movie4.AddBorrower(member6);
             movie5.AddBorrower(member6);
-            
 
+            movie1.AddBorrower(member5);
         }
 
 
@@ -150,6 +146,8 @@ namespace CAB301Project
                         DisplayMovieBorrowers();
                         break;
                     case 0:
+                        Console.WriteLine("\n Logging out staff account - Press any key to continue...");
+                        Console.ReadKey();
                         MainMenu();
                         break;
                     default:
@@ -172,8 +170,6 @@ namespace CAB301Project
         //Member menu
         public void MemberMenu()
         {
-            Member member = new Member("Aone", "Onelast", "0404444544", "4837"); //3
-
             Console.Clear();
             Console.Write("========================Member Menu=========================\n" +
                           " 1. Browse all the movies\n" +
@@ -185,7 +181,6 @@ namespace CAB301Project
                           " 0. Return to the main menu\n\n" +
                           "Enter your choice ==> (1/2/3/4/5/6/0)\n");
             string input = Console.ReadLine();
-
             if (int.TryParse(input, out int choice))
             {
                 switch (choice)
@@ -197,19 +192,19 @@ namespace CAB301Project
                         DisplayMovieInfo();
                         break;
                     case 3:
-                        BorrowMovie(CurrentlyLoggedInUser);/*something here */
+                        BorrowMovie(CurrentlyLoggedInUser);
                         break;
                     case 4:
-                        ReturnMovie(CurrentlyLoggedInUser);/*something here */
+                        ReturnMovie(CurrentlyLoggedInUser);
                         break;
                     case 5:
-                        CurrentlyBorrowed(CurrentlyLoggedInUser);/*something here */
+                        CurrentlyBorrowed(CurrentlyLoggedInUser);
                         break;
                     case 6:
                         Top3Movies();/*something here */
                         break;
                     case 0:
-                        logout();
+                        MemberLogout();
                         break;
                     default:
                         Console.WriteLine("Invalid selection. Press any key to continue.");
@@ -283,8 +278,8 @@ namespace CAB301Project
             if(validMovie != null)
             {
                 Console.Write($"\nMovie Found in this Collection:\n\n");
-                Console.WriteLine($"{validMovie.ToString().Replace(',', '\n')} \n Total Copies: {validMovie.TotalCopies}");
-                Console.WriteLine("\nPlease enter amount of DVDs to add for this movie.");
+                Console.WriteLine($"{ validMovie.ToString().Replace(',', '\n')} \n Total Copies: {validMovie.TotalCopies}");
+                Console.WriteLine("\n Please enter amount of DVDs to add for this movie:");
                 string smovie = Console.ReadLine();
                 bool validCount = int.TryParse(smovie, out int addCount);
                 validCount = addCount > 0;
@@ -308,7 +303,7 @@ namespace CAB301Project
                     
                     validMovie.TotalCopies += addCount;
                     validMovie.AvailableCopies += addCount;
-                    Console.WriteLine($"\nAdding {addCount} copies of DVDs to {validMovie.Title} - Total Copies {validMovie.TotalCopies}");
+                    Console.WriteLine($"\n Adding {addCount} copies of DVDs to {validMovie.Title} - Total Copies {validMovie.TotalCopies}");
                     Console.WriteLine("\nPress any key to return to the staff menu.");
                     Console.ReadKey();
                     StaffMenu();
@@ -316,8 +311,8 @@ namespace CAB301Project
             }
             else
             {
-                Console.WriteLine($"\nMovie '{movieTitlePrompt}' is not found in this Collection.");
-                Console.WriteLine($"Please enter the new details of '{movieTitlePrompt}'");
+                Console.WriteLine($"\n Movie '{movieTitlePrompt}' is not found in this Collection.");
+                Console.WriteLine($" Please enter the new details of '{movieTitlePrompt}'");
             }
 
             //Genre
@@ -451,6 +446,7 @@ namespace CAB301Project
                 switch(choice.ToLower())
                 {
                     case "y":
+                        Console.WriteLine();
                         movieCollection.Insert(movie);
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadKey();
@@ -513,7 +509,7 @@ namespace CAB301Project
             }
             if (validMovie.AvailableCopies > 0)
             {
-                Console.Write("\nEnter number of DVDs to be removed:");
+                Console.Write("\nEnter number of DVDs to be removed: ");
                 string DVDPrompt = Console.ReadLine();
                 bool validNum = int.TryParse(DVDPrompt, out int DVDnumber);
              
@@ -539,7 +535,7 @@ namespace CAB301Project
                     bool validinput = false;
                     while(!validinput)
                     {
-                        Console.WriteLine("Warning! - Removing the last copy of a DVD from a movie will remove the movie from the collection." +
+                        Console.WriteLine("\n Warning! - Removing the last copy of a DVD from a movie will remove the movie from the collection." +
                             "\n Press 'Y' continue or Press or press 'N' to exit ");
                         string choice = Console.ReadLine();
                         choice.ToLower();
@@ -556,14 +552,15 @@ namespace CAB301Project
                 //Decrement Total Copies and Available Copies Count
                 validMovie.TotalCopies = validMovie.TotalCopies - DVDnumber;
                 validMovie.AvailableCopies = validMovie.AvailableCopies - DVDnumber;
-                Console.WriteLine($"\n{DVDnumber} DVD copies removed from Movie '{validMovie.Title}'.\n");
-                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
+                Console.WriteLine("\n============================");
+                Console.WriteLine($"\n {DVDnumber} DVD copies removed from Movie '{validMovie.Title}'.\n");
+                Console.WriteLine($" There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
                                   $"with {validMovie.TotalCopies - validMovie.AvailableCopies} currently on borrow.");
             }
             else
             {
-                Console.WriteLine($"\nError - There is no available copies to remove.");
-                Console.WriteLine($"There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
+                Console.WriteLine($"\n Error - There is no available copies to remove.");
+                Console.WriteLine($" There are {validMovie.TotalCopies} total copies remaining for '{validMovie.Title}', " +
                                   $"with {validMovie.TotalCopies - validMovie.AvailableCopies} currently on borrow.");
                 Console.WriteLine("\nPress any key to return to the staff menu.");
                 Console.ReadKey();
@@ -571,9 +568,10 @@ namespace CAB301Project
             }
             if (validMovie.TotalCopies == 0)
             {
-                Console.WriteLine($"\nMovie '{validMovie.Title}' has been removed from the system as there are no copies left.");
+                Console.WriteLine($"\n Movie '{validMovie.Title}' has been removed from the system as there are no copies left.");
                 movieCollection.Delete(validMovie);
             }
+            Console.WriteLine("\n============================");
             Console.WriteLine("\nPress any key to return to the staff menu.");
             Console.ReadKey();
             StaffMenu();
@@ -589,12 +587,13 @@ namespace CAB301Project
             //loop till valid first name > 0
             Console.Write("First Name: ");
             string firstName = Console.ReadLine();
-            bool validfirstName = firstName.Length > 0;
+            //this uses System.Linq - can delete if needed ( its checks if theres any numbers in first name)
+            bool validfirstName = firstName.Length > 0 && firstName.Any(letter => char.IsDigit(letter)) == false;
             while(!validfirstName)
             {
-                Console.WriteLine("Please enter a valid First Name (press 0 to exit):");
+                Console.Write("Please enter a valid First Name (press 0 to exit): ");
                 firstName = Console.ReadLine();
-                validfirstName = firstName.Length > 0;
+                validfirstName = firstName.Length > 0 && firstName.Any(letter => char.IsDigit(letter)) == false;
                 if (int.TryParse(firstName, out int quit))
                 {
                     if (quit == 0)
@@ -606,12 +605,12 @@ namespace CAB301Project
             //loop till valid last name > 0
             Console.Write("\nLast Name: ");
             string lastName = Console.ReadLine();
-            bool validLastName = lastName.Length > 0;
+            bool validLastName = lastName.Length > 0 && lastName.Any(letter => char.IsDigit(letter)) == false;
             while (!validLastName)
             {
-                Console.WriteLine("Please enter a valid Last Name (press 0 to exit):");
+                Console.Write("Please enter a valid Last Name (press 0 to exit): ");
                 lastName = Console.ReadLine();
-                validLastName = lastName.Length > 0;
+                validLastName = lastName.Length > 0 && lastName.Any(letter => char.IsDigit(letter)) == false;
                 if (int.TryParse(lastName, out int quit))
                 {
                     if (quit == 0)
@@ -628,8 +627,7 @@ namespace CAB301Project
             {
                 Console.Write("Please enter a valid contact number (press 0 to exit): ");
                 contactNumber = Console.ReadLine();
-                if (IMember.IsValidContactNumber(contactNumber))
-                    validPhoneNumber = true;
+                validPhoneNumber = IMember.IsValidContactNumber(contactNumber); 
                 if (int.TryParse(contactNumber, out int quit))
                 {
                     if (quit == 0)
@@ -645,10 +643,9 @@ namespace CAB301Project
             while (!validPIN)
             {
                 Console.Write("Please enter a valid pin (press 0 to exit): ");
-                string input = Console.ReadLine();
-                if (IMember.IsValidPin(input))
-                    validPIN = true;
-                if (int.TryParse(input, out int quit))
+                pin = Console.ReadLine();
+                validPIN = IMember.IsValidPin(pin);
+                if (int.TryParse(pin, out int quit))
                 {
                     if (quit == 0)
                     {
@@ -656,7 +653,7 @@ namespace CAB301Project
                     }
                 }
             }
-
+            
             //Create Member object with valid phone number, pin and name 
             Member validMember = new Member(firstName, lastName, contactNumber, pin);
 
@@ -673,9 +670,8 @@ namespace CAB301Project
                 switch (choice.ToLower())
                 {
                     case "y":
-                        registeredMembers.Add(validMember);
                         memberCollection.Add(validMember);
-                        Console.WriteLine($"{validMember.FirstName} {validMember.LastName} succesfully registered.");
+                        Console.WriteLine($"\n {validMember.FirstName} {validMember.LastName} succesfully registered.");
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadKey();
                         StaffMenu();
@@ -705,7 +701,7 @@ namespace CAB301Project
             /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
             Console.Clear(); 
             Console.WriteLine("================= Delete a Registered Member ===================\n");
-            Console.WriteLine("Members found in collection (Last name, First name):\n");
+            Console.WriteLine(" Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
             Console.WriteLine("Please enter a valid member from the collection:");
@@ -759,8 +755,8 @@ namespace CAB301Project
             }
             if(validInput == true)
             {
-                Console.WriteLine($"Error - Cannot remove '{validMember.FirstName} {validMember.LastName}' as they have DVDs on borrow.");
-                Console.WriteLine($"Number of DVDs on borrow: {counter}");
+                Console.WriteLine($" Error - Cannot remove '{validMember.FirstName} {validMember.LastName}' as they have DVDs on borrow.");
+                Console.WriteLine($" Number of DVDs on borrow: {counter}");
                 Console.WriteLine("\nPress any key to return to the staff menu.");
                 Console.ReadKey();
                 StaffMenu();
@@ -779,7 +775,7 @@ namespace CAB301Project
                 {
                     case "y":
                         memberCollection.Delete(member);
-                        Console.WriteLine($"{member.FirstName} {member.LastName} succesfully deleted.");
+                        Console.WriteLine($"\n {member.FirstName} {member.LastName} succesfully deleted.");
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadKey();
                         StaffMenu();
@@ -808,7 +804,7 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("========= Obtain a Member's Contact Number ==========\n");
-            Console.WriteLine("Members found in collection (Last name, First name):\n");
+            Console.WriteLine(" Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
             Console.WriteLine("Please enter a valid member from the collection:");
@@ -846,24 +842,10 @@ namespace CAB301Project
                 temp = new Member(memberFirstName, memberLastName);
                 Console.WriteLine();
                 validMember = memberCollection.Find(temp);
-                Console.WriteLine();
+
             }
-            /*
-        while (!validMember) - to delete
-        {
-            Console.Write("Please enter an existing member's first name:");
-            string firstName = Console.ReadLine();
-            Console.Write("Please enter an existing member's last name:");
-            string lastName = Console.ReadLine();
-            //may need to add here to break out of loop
-            Console.WriteLine();
-            temp = new Member(firstName, lastName);
-            validMember = memberCollection.Search(temp);
-        }
-        */
-            //string contactNo = memberCollection.Find(temp).ContactNumber;
             Console.WriteLine("=============================================\n");
-            Console.WriteLine($"{temp.FirstName} {temp.LastName}'s contact number is {validMember.ContactNumber}.\n");
+            Console.WriteLine($" {temp.FirstName} {temp.LastName}'s contact number is {validMember.ContactNumber}.\n");
             Console.WriteLine("=============================================\n");
             Console.WriteLine("Press any key to return to the staff menu.");
             Console.ReadKey();
@@ -880,7 +862,7 @@ namespace CAB301Project
             Console.WriteLine("=========== Display Borrowers of a Movie ===============\n");
             IMovie[] movieArray = movieCollection.ToArray();
 
-            Console.WriteLine("Current collection of movies:\n");
+            Console.WriteLine(" Current collection of movies:\n");
             if (!movieCollection.IsEmpty())
             {
                 foreach (IMovie imovie in movieArray)
@@ -890,7 +872,7 @@ namespace CAB301Project
             }
             else
             {
-                Console.WriteLine("No movies exist in the movie collection.");
+                Console.WriteLine(" No movies exist in the movie collection.");
                 Console.WriteLine("Press any key to return to the staff menu.");
                 Console.ReadKey();
                 StaffMenu();
@@ -922,7 +904,7 @@ namespace CAB301Project
             else
             {
                 Console.WriteLine("\n=============================================");
-                Console.WriteLine($"\nList of members currently borrowing out {validMovie.Title}:\n");
+                Console.WriteLine($"\n List of members currently borrowing out {validMovie.Title}:\n");
                 Console.WriteLine(validMovie.Borrowers.ToString());
                 Console.WriteLine("=============================================\n");
             }
@@ -932,33 +914,10 @@ namespace CAB301Project
         }
 
 
-        /* - to delete?
-        //Check input
-        public Movie CheckMovieInput()
-        {
-            Movie validMovie = null;
-            bool validMovieCheck = false;
-            while (validMovieCheck == false)
-            {
-                string movieTitle = Console.ReadLine();
-                Movie movie = (Movie)movieCollection.Search(movieTitle);
-                Console.WriteLine($"Movie {movieTitle} does not exist in the movie collection. Enter 0 to exit.");
-                Console.WriteLine("Enter a valid movie title:");
-                if (movie != null)
-                {
-                    validMovie = movie;
-                    validMovieCheck = true;
-                    return validMovie;
-                }
-                if (movieTitle == "0")
-                    StaffMenu();
-            }
-            return validMovie;
-        }
-        */
+
 
         //=====================================Member Menu Methods ====================
-        //Member login - in progress
+        //Member login
         public void MemberLogin()
         {
             Console.Clear();
@@ -978,36 +937,28 @@ namespace CAB301Project
             {
                 if(validMember.Pin == memberPIN)
                 {
-                    Console.WriteLine($"Verfication Sucessfull - Now Logging In {validMember.FirstName} {validMember.LastName}.");
+                    Console.WriteLine($"\n Verfication Successful - Now Logging In '{validMember.FirstName} {validMember.LastName}'.");
                     CurrentlyLoggedInUser = validMember;
-                    Console.WriteLine("\nPress any key to return to the staff menu.");
+                    Console.WriteLine("\nPress any key to continue...");
                     Console.ReadKey();
                     MemberMenu();
                 }
                 else
                 {
-                    Console.WriteLine("Pin Number Not valid.");
-                    Console.WriteLine("\nPress any key to return to the staff menu.");
+                    Console.WriteLine($"\n Error - Pin number is not valid for member '{validMember.FirstName} {validMember.LastName}'.");
+                    Console.WriteLine("\nPress any key to return to the main menu.");
                     Console.ReadKey();
                     MainMenu();
                 }
             }
             else
             {
-                Console.WriteLine($"Error - {memberFirstName} {memberLastName} does not exists in this collection.");
-                Console.WriteLine("\nPress any key to return to the staff menu.");
+                Console.WriteLine($"\n Error - '{memberFirstName} {memberLastName}' does not exists in this collection.");
+                Console.WriteLine("\nPress any key to return to the main menu.");
                 Console.ReadKey();
                 MainMenu();
 
             }
-
-            /*
-            Console.WriteLine("Member login verification has yet to be implemented.\n" +
-                              "Press any key to continue to the member menu.");
-            Console.ReadKey();
-            //Member member = memberCollection.Search(userName, password);
-            MemberMenu();
-            */
         }
 
 
@@ -1048,10 +999,18 @@ namespace CAB301Project
             Movie validMovie = (Movie)movieCollection.Search(movie);
             while (validMovie == null)
             {
-                Console.Write("Please enter a valid movie title: ");
+                Console.Write("Please enter a valid movie title (press 0 to quit): ");
                 string smovie = Console.ReadLine();
                 validMovie = (Movie)movieCollection.Search(smovie);
+                if (int.TryParse(smovie, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        MemberMenu();
+                    }
+                }
             }
+            Console.WriteLine();
             Console.WriteLine(validMovie.ToString() + "\n");
             Console.WriteLine("Press any key to return to the member menu.");
             Console.ReadKey();
@@ -1060,12 +1019,14 @@ namespace CAB301Project
 
 
 
-        //Borrow movie
+        //Member borrow dvd
         public void BorrowMovie(IMember member1)
         {
             Console.Clear();
             Console.WriteLine("================ Borrow Movie =================\n");
             IMovie[] movieArray = movieCollection.ToArray();
+            List<IMovie> moviesNotBorrowing = new List<IMovie>();
+            
             int borrowCount = 0;
             if (movieCollection.IsEmpty())
             {
@@ -1074,7 +1035,10 @@ namespace CAB301Project
                 Console.ReadKey();
                 MemberMenu();
             }
-            Console.WriteLine("Movies currently borrowing:");
+            
+            //display movies currently borrowing - can delete if we want
+            Console.WriteLine("Movies currently borrowing:\n");
+            
             foreach (IMovie imovie in movieArray)
             {
                 if (imovie.Borrowers.Search(member1))
@@ -1082,17 +1046,43 @@ namespace CAB301Project
                     Console.WriteLine($"{imovie.ToString()}");
                     borrowCount++;
                 }
+                else
+                {
+                    moviesNotBorrowing.Add(imovie);
+                }
             }
+        
+            if (borrowCount < 1)
+            {
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
+            }
+
+            //display movies that are not being borrowed - can delte if we want
+            Console.WriteLine("\nMovies available for borrow:\n");
+            foreach (IMovie imovie in moviesNotBorrowing)
+            {
+                Console.WriteLine($"{imovie.ToString()}");
+            }
+
+            Console.WriteLine("\n=====================================");
+
             if (borrowCount < 5)
             {
-                Console.WriteLine("Please enter a movie title:");
+                Console.Write("Please enter a movie title: ");
                 string movie = Console.ReadLine();
                 Movie validMovie = (Movie)movieCollection.Search(movie);
                 while (validMovie == null)
                 {
-                    Console.Write("Please enter a valid movie title: ");
+                    Console.Write("Please enter a valid movie title (press 0 to quit): ");
                     string smovie = Console.ReadLine();
                     validMovie = (Movie)movieCollection.Search(smovie);
+                    if (int.TryParse(smovie, out int quit))
+                    {
+                        if (quit == 0)
+                        {
+                            MemberMenu();
+                        }
+                    }
                 }
                 bool validReviewInput = false;
                 while (validReviewInput == false)
@@ -1105,16 +1095,12 @@ namespace CAB301Project
                     switch (choice.ToLower())
                     {
                         case "y":
-                            if (!validMovie.Borrowers.Search(member1))
+                            if (validMovie.AddBorrower(member1))
                             {
-                                Console.WriteLine($"\n{validMovie.Title} has been successfully borrowed.");
-                                validMovie.AddBorrower(member1);
+                                Console.WriteLine($"\n {validMovie.Title} has been successfully borrowed.");
                             }
-                            else
-                            {
-                                Console.WriteLine($"You already have {validMovie.Title} on borrow.");
-                            }
-                            Console.WriteLine("\nPress any key to continue...");
+                            Console.WriteLine();
+                            Console.WriteLine("Press any key to continue...");
                             Console.ReadKey();
                             MemberMenu();
                             break;
@@ -1132,8 +1118,8 @@ namespace CAB301Project
             }
             else
             {
-                Console.WriteLine($"\nYou have {borrowCount} DVDs already borrowed. This is the Maxmimum limit.");
-                Console.WriteLine("Please return a DVD before borrowing another.");
+                Console.WriteLine($"\n You have {borrowCount} DVDs already borrowed. This is the Maxmimum limit.");
+                Console.WriteLine(" Please return a DVD before borrowing another.");
                 Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
@@ -1141,6 +1127,9 @@ namespace CAB301Project
             }
         }
 
+
+
+        //member return a dvd
         public void ReturnMovie(IMember member)
         {
             Console.Clear();
@@ -1150,28 +1139,46 @@ namespace CAB301Project
             if (movieCollection.IsEmpty())
             {
                 Console.WriteLine($"There are currently no movies in the movie collection.");
-                Console.WriteLine("Press any key to return to the member menu.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
-            Console.WriteLine("Movies currently borrowing:");
+            Console.WriteLine("Movies currently borrowing:\n");
             foreach (IMovie imovie in movieArray)
             {
                 if (imovie.Borrowers.Search(member))
                 {
                     Console.WriteLine($"{imovie.ToString()}");
+                    borrowCount++;
                     
                 }
 
             }
-            Console.Write("Please enter a movie title:");
+            if (borrowCount == 0)
+            {
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                MemberMenu();
+
+            }
+            Console.WriteLine("\n=====================================");
+
+            Console.Write("Please enter a movie title: ");
             string movie = Console.ReadLine();
             Movie validMovie = (Movie)movieCollection.Search(movie);
             while (validMovie == null)
             {
-                Console.Write("Please enter a valid movie title: ");
+                Console.Write("Please enter a valid movie title (press 0 to quit): ");
                 string smovie = Console.ReadLine();
                 validMovie = (Movie)movieCollection.Search(smovie);
+                if (int.TryParse(smovie, out int quit))
+                {
+                    if (quit == 0)
+                    {
+                        MemberMenu();
+                    }
+                }
             }
 
             bool validReviewInput = false;
@@ -1185,14 +1192,9 @@ namespace CAB301Project
                 switch (choice.ToLower())
                 {
                     case "y":
-                        if (validMovie.Borrowers.Search(member))
+                        if (validMovie.RemoveBorrower(member))
                         {
                             Console.WriteLine($"\n{validMovie.Title} has been successfully returned.");
-                            validMovie.RemoveBorrower(member);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"You don't have {validMovie.Title} on borrow to return.");
                         }
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadKey();
@@ -1211,13 +1213,13 @@ namespace CAB301Project
             }
         }
         
-
+        //Currently Borrowed movies of a member
         public void CurrentlyBorrowed(IMember member)
         {
             Console.Clear();
             Console.WriteLine("============= Current Borrowing Movies =============\n");
             IMovie[] movieArray = movieCollection.ToArray();
-
+            int borrowCount = 0;
             if (movieCollection.IsEmpty())
             {
                 Console.WriteLine($"There are currently no movies in the movie collection.");
@@ -1229,13 +1231,24 @@ namespace CAB301Project
             foreach (IMovie imovie in movieArray)
             {
                 if (imovie.Borrowers.Search(member))
+                {
                     Console.WriteLine($"{imovie.ToString()}");
+                    borrowCount++;
+                }
+            }
+            if(borrowCount == 0)
+            {
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
             }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
         }
 
+
+
+
+        //Display to 3 borrowed movies
         public void Top3Movies()
         {
             Console.Clear();
@@ -1248,13 +1261,47 @@ namespace CAB301Project
                 MemberMenu();
             }
 
-
             MovieCollection Collectiontemp = movieCollection;
+            IMovie[] movieArray = Collectiontemp.ToArray();
+            /*
+            for (int i = 1; i < movieArray.Length; ++i)
+            {
+                IMovie temp = movieArray[i];
+                int j = i - 1;
+                while(j >= 0 && movieArray[j].NoBorrowings > temp.NoBorrowings)
+                {
+                    movieArray[j + 1] = movieArray[j];
+                    j = j - 1;
+                }
+                movieArray[j + 1] = temp;
+            }
+            */
 
+
+            for (int i = 1; i < movieArray.Length; i++)
+            {
+                IMovie temp = movieArray[i];
+                int k = i - 1;
+                while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
+                {
+                    movieArray[k + 1] = movieArray[k];
+                    k = k - 1;
+                }
+                movieArray[k + 1] = temp;
+            }
+            
+            for (int i = 0; i < 3; ++i)//change to 3 or movieArray.Lenght to see all
+               Console.WriteLine($" {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
+
+
+
+
+
+
+
+            /*
             for (int j = 0; j < 3; j++)
             {
-                IMovie[] movieArray = Collectiontemp.ToArray();
-
                 int? maxVal = null; //nullable so this works even if you have all super-low negatives
                 int index = -1;
                 int i;
@@ -1268,11 +1315,10 @@ namespace CAB301Project
                     }
                 }
                 Console.WriteLine($"{movieArray[index].ToString()}");
-
-//                Collectiontemp.Delete(movieArray[index]);
+                Collectiontemp.Delete(movieArray[index]);
             }
 
-
+            */
             //  foreach (int top in large)
             //   {
             //      Console.WriteLine($"{movieArray[top].Title} has been borrowed a number of {movieArray[top].NoBorrowings} times.");
@@ -1283,11 +1329,14 @@ namespace CAB301Project
             Console.ReadKey();
             MemberMenu();
         }
-        public void logout()
+
+
+        //logout a member return to main menu
+        public void MemberLogout()
         {
-            Console.WriteLine($"Logging out {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName}");
+            Console.WriteLine($"\nLogging out '{CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName}'");
             CurrentlyLoggedInUser = null;
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MainMenu();
         }

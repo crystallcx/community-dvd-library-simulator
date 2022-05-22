@@ -71,12 +71,14 @@ namespace CAB301Project
         {
             if (AvailableCopies < 1)
             {
-                Console.WriteLine("There is no available copies for this movie at the present time.");
+                //debug
+                Console.WriteLine($"\n There is no available copies for '{Title}' at the present time - Try again later.");
                 return false;
             }
             if (Borrowers.Search(member) == true)
             {
-                Console.WriteLine("Member is already in the borrowers list for this movie - AddBorrower Error");
+                //debug
+                Console.WriteLine($"\n Error - Member '{member.FirstName} {member.LastName}' already has '{Title}' on borrow. ");
                 return false;
             }
             else
@@ -97,12 +99,13 @@ namespace CAB301Project
         {
             if (Borrowers.Search(member) == false)
             {
-                Console.WriteLine("Member is NOT in the borrowers list for this movie title");
+                Console.WriteLine($"\n Error - Member '{member.FirstName} {member.LastName}' does not have '{Title}' on borrow. ");
                 return false;
             }
             else
             {
-                Console.WriteLine($"Deleteing member {member.ToString()}");
+                //debug
+                //Console.WriteLine($"Deleteing member {member.ToString()}");
                 Borrowers.Delete(member);
                 AvailableCopies++;
                 return true;

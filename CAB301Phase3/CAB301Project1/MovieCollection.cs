@@ -77,7 +77,7 @@ namespace CAB301Project
 			if (root == null)
 			{
 				root = new BTreeNode(movie);
-				Console.WriteLine($"Now Adding {movie.Title} to the MovieCollection");
+				Console.WriteLine($" Now Adding {movie.Title} to the MovieCollection");
 				count++;
 				return true;
 			}
@@ -85,7 +85,7 @@ namespace CAB301Project
 			{
 				if (Search(movie) == true)
 				{
-					Console.WriteLine($"Movie: {movie.Title} Already Exists! - Please try again - MOVIE INSERT ERROR");
+					Console.WriteLine($" Movie: {movie.Title} Already Exists! - Please try again - MOVIE INSERT ERROR");
 					return false;
 				}
 				Insert(movie, root);
@@ -102,7 +102,7 @@ namespace CAB301Project
 				if (pointer.LChild == null)
 				{
 					pointer.LChild = new BTreeNode(thisMovie);
-					Console.WriteLine($"Now Adding {thisMovie.Title} to the MovieCollection");
+					Console.WriteLine($" Now Adding {thisMovie.Title} to the Movie Collection");
 					return;
 				}
 				else
@@ -113,7 +113,7 @@ namespace CAB301Project
 				if (pointer.RChild == null)
 				{
 					pointer.RChild = new BTreeNode(thisMovie);
-					Console.WriteLine($"Now Adding {thisMovie.Title} to the MovieCollection");
+					Console.WriteLine($" Now Adding {thisMovie.Title} to the Movie Collection");
 					return;
 				}
 				else
@@ -149,7 +149,8 @@ namespace CAB301Project
 					{
 						pointer.Movie = pointer.LChild.Movie;
 						pointer.LChild = pointer.LChild.LChild;
-						Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
+						//debug
+						//Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
 						count--;
 						return true;
 					}
@@ -165,7 +166,8 @@ namespace CAB301Project
 						// copy the item at p to ptr
 						pointer.Movie = p.Movie;
 						pp.RChild = p.LChild;
-						Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
+						//debug
+						//Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
 						count--;
 						return true;
 					}
@@ -188,7 +190,8 @@ namespace CAB301Project
 						else
 							parent.RChild = c;
 					}
-					Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
+					//debug
+					//Console.WriteLine($"Deleteing Movie: {movie.Title} - Delete Success");
 					count--;
 					return true;
 				}
@@ -214,7 +217,8 @@ namespace CAB301Project
 			{
 				if (movie.CompareTo(pointer.Movie) == 0)
 				{
-					Console.WriteLine($"Movie: {movie.Title} exists! - Search by IMovie object = True");
+					//debug
+					//Console.WriteLine($"Movie: {movie.Title} exists! - Search by IMovie object = True");
 					return true;
 				}
 				else
@@ -225,30 +229,13 @@ namespace CAB301Project
 			}
 			else
 			{
-				Console.WriteLine($"Movie: {movie.Title} does NOT exists!- Search by IMovie object = False.");
+				//debug
+				//Console.WriteLine($"Movie: {movie.Title} does NOT exists!- Search by IMovie object = False.");
 				return false;
 			}
 		}
 
-		/*
-		// Search for a movie by its title in this movie collection  
-		// pre: nil
-		// post: return the reference of the movie object if the movie is in this movie collection;
-		//	     otherwise, return null.
-		public IMovie Search(string movietitle)
-		{
-			IMovie[] moviesToArray = ToArray();
-			for (int i = 0; i < count; i++)
-			{
-				if (moviesToArray[i].Title == movietitle)
-				{
-					Console.WriteLine($"Movie {movietitle} Exists! - Search by string True");
-					return moviesToArray[i];
-				}
-			}
-			Console.WriteLine($"Movie {movietitle} does NOT exists! - Search movie by string = False.");
-			return null;
-		} */
+
 		public IMovie Search(string movietitle)
 		{
 			IMovie result = Search(movietitle, root);
