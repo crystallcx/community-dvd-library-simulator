@@ -88,13 +88,13 @@ namespace CAB301Project
                     members[j + 1] = temp;
                     count++;
                     //debug
-                    //Console.WriteLine($"Adding New member: {member.FirstName} {member.LastName} ");
+                    //Console.WriteLine($"\n Registering: {member.FirstName} {member.LastName}.");
                     return;
                 }
                 else
                 {
                     //debug
-                    //Console.WriteLine($"{member.FirstName} {member.LastName} Member Already Existis - ADD ERROR MESSAGE");
+                    //Console.WriteLine($"\n Error - {member.FirstName} {member.LastName} Member Already Existis.");
                     return;
                 }
             }

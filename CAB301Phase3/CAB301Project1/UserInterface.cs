@@ -24,8 +24,8 @@ namespace CAB301Project
             Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie7 = new Movie("Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             movieCollection.Insert(movie1);
-            //movieCollection.Insert(movie2);
-            //movieCollection.Insert(movie3);
+            movieCollection.Insert(movie2);
+            movieCollection.Insert(movie3);
             //movieCollection.Insert(movie4);
             //movieCollection.Insert(movie5);
             //movieCollection.Insert(movie6);
@@ -52,7 +52,7 @@ namespace CAB301Project
 
             movie1.AddBorrower(member6);
             movie2.AddBorrower(member6);
-            movie3.AddBorrower(member6);
+            //movie3.AddBorrower(member6);
             movie4.AddBorrower(member6);
             movie5.AddBorrower(member6);
 
@@ -234,6 +234,10 @@ namespace CAB301Project
             string staffPassword = Console.ReadLine();
             if (staffUserName == "staff" && staffPassword == "today123")
             {
+                Console.WriteLine("\n Staff login verified.\n" +
+                    "\nPress any key to continue...");
+
+                Console.ReadKey();
                 StaffMenu();
             }
             else
@@ -653,7 +657,9 @@ namespace CAB301Project
                     }
                 }
             }
-            
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+
             //Create Member object with valid phone number, pin and name 
             Member validMember = new Member(firstName, lastName, contactNumber, pin);
 
@@ -670,8 +676,15 @@ namespace CAB301Project
                 switch (choice.ToLower())
                 {
                     case "y":
-                        memberCollection.Add(validMember);
-                        Console.WriteLine($"\n {validMember.FirstName} {validMember.LastName} succesfully registered.");
+                        if (!memberCollection.Search(validMember))
+                        {
+                            memberCollection.Add(validMember);
+                            Console.WriteLine($"\n {validMember.FirstName} {validMember.LastName} succesfully registered.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\n Error - {validMember.FirstName} {validMember.LastName} Member already existis.");
+                        }
                         Console.WriteLine("\nPress any key to continue...");
                         Console.ReadKey();
                         StaffMenu();
@@ -761,6 +774,9 @@ namespace CAB301Project
                 Console.ReadKey();
                 StaffMenu();
             }
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
             //Review input
             // y for yes, n for no.
             bool validReviewInput = false;
@@ -898,13 +914,13 @@ namespace CAB301Project
             if(validMovie.Borrowers.Number == 0)
             {
                 Console.WriteLine("\n=============================================");
-                Console.WriteLine($"\n No one is currently borrowing out {validMovie.Title}.\n");
+                Console.WriteLine($"\n No one is currently borrowing out '{validMovie.Title}'.\n");
                 Console.WriteLine("=============================================\n");
             }
             else
             {
                 Console.WriteLine("\n=============================================");
-                Console.WriteLine($"\n List of members currently borrowing out {validMovie.Title}:\n");
+                Console.WriteLine($"\n List of members currently borrowing out '{validMovie.Title}':\n");
                 Console.WriteLine(validMovie.Borrowers.ToString());
                 Console.WriteLine("=============================================\n");
             }
@@ -1017,8 +1033,10 @@ namespace CAB301Project
                     }
                 }
             }
+            Console.WriteLine("\n===============================");
             Console.WriteLine();
             Console.WriteLine(validMovie.ToString() + "\n");
+            Console.WriteLine("===============================");
             Console.WriteLine("Press any key to return to the member menu.");
             Console.ReadKey();
             MemberMenu();
@@ -1071,7 +1089,7 @@ namespace CAB301Project
                 Console.WriteLine($"{imovie.ToString()}");
             }
 
-            Console.WriteLine("\n=====================================");
+            Console.WriteLine("\n=====================================\n");
 
             if (borrowCount < 5)
             {
@@ -1091,6 +1109,11 @@ namespace CAB301Project
                         }
                     }
                 }
+                
+                Console.WriteLine();
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+               
                 bool validReviewInput = false;
                 while (validReviewInput == false)
                 {
@@ -1187,7 +1210,9 @@ namespace CAB301Project
                     }
                 }
             }
-
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
             bool validReviewInput = false;
             while (validReviewInput == false)
             {
