@@ -9,7 +9,7 @@ Version 1.0
 - MemberCollections
 - Program.cs (used for testing)
 - 
-Version 1.2
+Version 1.1
 - Added code from Phase 2:
 - IMovie
 - IMovieCollections
@@ -19,6 +19,6 @@ Version 1.2
 - Added UserInterface class
 - added a few methods in there and linked the menus up to not crash
 -
-Version 1.3
+Version 1.2
 - Added/tested and completed all methods in UserInterface.cs (1400 lines)
 - Final checks and testing
