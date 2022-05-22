@@ -24,12 +24,12 @@ namespace CAB301Project
             Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie7 = new Movie("Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             movieCollection.Insert(movie1);
-            movieCollection.Insert(movie2);
-            movieCollection.Insert(movie3);
-            movieCollection.Insert(movie4);
-            movieCollection.Insert(movie5);
-            movieCollection.Insert(movie6);
-            movieCollection.Insert(movie7);
+            //movieCollection.Insert(movie2);
+            //movieCollection.Insert(movie3);
+            //movieCollection.Insert(movie4);
+            //movieCollection.Insert(movie5);
+            //movieCollection.Insert(movie6);
+            //movieCollection.Insert(movie7);
 
             Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
             Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
@@ -209,7 +209,7 @@ namespace CAB301Project
                     default:
                         Console.WriteLine("Invalid selection. Press any key to continue.");
                         Console.ReadKey();
-                        MainMenu();
+                        MemberMenu();
                         break;
                 }
             }
@@ -217,7 +217,7 @@ namespace CAB301Project
             {
                 Console.WriteLine("Invalid selection. Press any key to continue.");
                 Console.ReadKey();
-                MainMenu();
+                MemberMenu();
             }
         }
 
@@ -484,8 +484,8 @@ namespace CAB301Project
             }
             else
             {
-                Console.WriteLine("No movies exist in the movie collection.");
-                Console.WriteLine("Press any key to return to the staff menu.");
+                Console.WriteLine(" No movies exist in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the staff menu.");
                 Console.ReadKey();
                 StaffMenu();
             }
@@ -873,7 +873,7 @@ namespace CAB301Project
             else
             {
                 Console.WriteLine(" No movies exist in the movie collection.");
-                Console.WriteLine("Press any key to return to the staff menu.");
+                Console.WriteLine("\nPress any key to return to the staff menu.");
                 Console.ReadKey();
                 StaffMenu();
             }
@@ -971,8 +971,8 @@ namespace CAB301Project
             IMovie[] movieArray = movieCollection.ToArray();
             if (movieCollection.IsEmpty())
             {
-                Console.WriteLine($"There are currently no movies available.");
-                Console.WriteLine("Press any key to return to the member menu.");
+                Console.WriteLine($" There are currently no movies available.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
@@ -994,6 +994,13 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("================Obtain Movie Info=================\n");
+            if (movieCollection.IsEmpty())
+            {
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
             Console.WriteLine("Please enter a movie title:");
             string movie = Console.ReadLine();
             Movie validMovie = (Movie)movieCollection.Search(movie);
@@ -1030,8 +1037,8 @@ namespace CAB301Project
             int borrowCount = 0;
             if (movieCollection.IsEmpty())
             {
-                Console.WriteLine($"There are currently no movies in the movie collection.");
-                Console.WriteLine("Press any key to return to the member menu.");
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
@@ -1138,7 +1145,7 @@ namespace CAB301Project
             int borrowCount = 0;
             if (movieCollection.IsEmpty())
             {
-                Console.WriteLine($"There are currently no movies in the movie collection.");
+                Console.WriteLine($" There are currently no movies in the movie collection.");
                 Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
@@ -1222,8 +1229,8 @@ namespace CAB301Project
             int borrowCount = 0;
             if (movieCollection.IsEmpty())
             {
-                Console.WriteLine($"There are currently no movies in the movie collection.");
-                Console.WriteLine("Press any key to return to the member menu.");
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
@@ -1253,78 +1260,84 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
-            if (movieCollection.IsEmpty())
+            if (!movieCollection.IsEmpty())
             {
-                Console.WriteLine($"There are currently no movies in the movie collection.");
-                Console.WriteLine("Press any key to return to the member menu.");
+                MovieCollection Collectiontemp = movieCollection;
+                IMovie[] movieArray = Collectiontemp.ToArray();
+                for (int i = 1; i < movieArray.Length; i++)
+                {
+                    IMovie temp = movieArray[i];
+                    int k = i - 1;
+                    while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
+                    {
+                        movieArray[k + 1] = movieArray[k];
+                        k = k - 1;
+                    }
+                    movieArray[k + 1] = temp;
+                }
+
+                if (movieArray.Length > 2)
+                {
+                    for (int i = 0; i < 3; ++i)//change to 3 or movieArray.Lenght to see all
+                    {
+                        if(movieArray[i].NoBorrowings != 0)
+                        {
+                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($" {i + 1} - nil");
+                        }
+                        
+                    }
+                }
+                /* - we can use this and comment out the 2 for loops below if needed
+                else 
+                {
+                    Console.WriteLine($" Error - Not enough movies in collection to show top 3. Movies in collection '{movieArray.Length}'.");
+                }
+                */
+                
+                else if (movieArray.Length == 2)
+                {
+                    for (int i = 0; i < 2; ++i)
+                    {
+                        if (movieArray[i].NoBorrowings != 0)
+                        {
+                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($" {i + 1} - nil");
+                        }
+                    }
+                    Console.WriteLine(" 3 - nil");
+                }
+                else if (movieArray.Length == 1)
+                {
+                    for (int i = 0; i < 1; ++i)
+                    {
+                        if (movieArray[i].NoBorrowings != 0)
+                        {
+                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($" {i + 1} - nil");
+                        }
+                    }
+                    Console.WriteLine(" 2 - nil");
+                    Console.WriteLine(" 3 - nil");
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
-
-            MovieCollection Collectiontemp = movieCollection;
-            IMovie[] movieArray = Collectiontemp.ToArray();
-            /*
-            for (int i = 1; i < movieArray.Length; ++i)
-            {
-                IMovie temp = movieArray[i];
-                int j = i - 1;
-                while(j >= 0 && movieArray[j].NoBorrowings > temp.NoBorrowings)
-                {
-                    movieArray[j + 1] = movieArray[j];
-                    j = j - 1;
-                }
-                movieArray[j + 1] = temp;
-            }
-            */
-
-
-            for (int i = 1; i < movieArray.Length; i++)
-            {
-                IMovie temp = movieArray[i];
-                int k = i - 1;
-                while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
-                {
-                    movieArray[k + 1] = movieArray[k];
-                    k = k - 1;
-                }
-                movieArray[k + 1] = temp;
-            }
-            
-            for (int i = 0; i < 3; ++i)//change to 3 or movieArray.Lenght to see all
-               Console.WriteLine($" {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
-
-
-
-
-
-
-
-            /*
-            for (int j = 0; j < 3; j++)
-            {
-                int? maxVal = null; //nullable so this works even if you have all super-low negatives
-                int index = -1;
-                int i;
-                for (i = 0; i < movieArray.Length; i++)
-                {
-                    int thisNum = movieArray[i].NoBorrowings;
-                    if (!maxVal.HasValue || thisNum > maxVal.Value)
-                    {
-                        maxVal = thisNum;
-                        index = i;
-                    }
-                }
-                Console.WriteLine($"{movieArray[index].ToString()}");
-                Collectiontemp.Delete(movieArray[index]);
-            }
-
-            */
-            //  foreach (int top in large)
-            //   {
-            //      Console.WriteLine($"{movieArray[top].Title} has been borrowed a number of {movieArray[top].NoBorrowings} times.");
-            // }
-
-
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();

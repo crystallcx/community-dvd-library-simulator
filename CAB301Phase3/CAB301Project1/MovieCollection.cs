@@ -269,7 +269,8 @@ namespace CAB301Project
 			}
 			else
 			{
-				Console.WriteLine("There are no movies in this MovieCollection. - ToArray Search Error.");
+				//debug
+				//Console.WriteLine("There are no movies in this MovieCollection. - ToArray Search Error.");
 				return null;
 			}
 		}
