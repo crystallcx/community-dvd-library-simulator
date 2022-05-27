@@ -30,7 +30,7 @@ namespace CAB301Project
             //movieCollection.Insert(movie5);
             //movieCollection.Insert(movie6);
             //movieCollection.Insert(movie7);
-
+            /*
             Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
             Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
             Member member3 = new Member("Peter", "Smith", "0404445674", "4837"); //4
@@ -45,7 +45,7 @@ namespace CAB301Project
             memberCollection.Add(member5);
             memberCollection.Add(member6);
             memberCollection.Add(member7);
-
+            
             movie2.AddBorrower(member2);
             movie2.AddBorrower(member3);
             movie2.AddBorrower(member1);
@@ -57,6 +57,7 @@ namespace CAB301Project
             movie5.AddBorrower(member6);
 
             movie1.AddBorrower(member5);
+            */
         }
 
 
@@ -714,6 +715,14 @@ namespace CAB301Project
             /* precondition: member needs to have 0 movies currently borrowed before able to be deleted */
             Console.Clear(); 
             Console.WriteLine("================= Delete a Registered Member ===================\n");
+            if (memberCollection.IsEmpty())
+            {
+                Console.WriteLine(" Error - No members in the Member Collection");
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                StaffMenu();
+
+            }
             Console.WriteLine(" Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
