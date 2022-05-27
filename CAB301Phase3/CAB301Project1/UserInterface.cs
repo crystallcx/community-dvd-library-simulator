@@ -118,7 +118,7 @@ namespace CAB301Project
                           " 3. Register a new Member with the system\n" +
                           " 4. Remove a registered member from the system\n" +
                           " 5. Display a member's contact phone number, given the member's name\n" +
-                          " 6. Display all numbers who are currently renting a particular movie\n" +
+                          " 6. Display all members who are currently renting a particular movie\n" +
                           " 0. Return to the main menu\n\n" +
                           "Enter your choice ==> (1/2/3/4/5/6/0)\n");
             string input = Console.ReadLine();
@@ -1079,7 +1079,7 @@ namespace CAB301Project
         
             if (borrowCount < 1)
             {
-                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrow.");
             }
 
             //display movies that are not being borrowed - can delte if we want
@@ -1186,7 +1186,7 @@ namespace CAB301Project
             }
             if (borrowCount == 0)
             {
-                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrow.");
                 Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
                 MemberMenu();
@@ -1270,7 +1270,7 @@ namespace CAB301Project
             }
             if(borrowCount == 0)
             {
-                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrower.");
+                Console.WriteLine($" {CurrentlyLoggedInUser.FirstName} {CurrentlyLoggedInUser.LastName} has no movies currently on borrow.");
             }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
