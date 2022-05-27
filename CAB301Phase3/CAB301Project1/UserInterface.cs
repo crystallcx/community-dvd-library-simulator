@@ -671,7 +671,7 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Add Member ==========\n\n");
-                Console.WriteLine($" Frist Name: {validMember.FirstName} \n Last Name: {validMember.LastName} \n Ph: { validMember.ContactNumber} \n Pin: { validMember.Pin}");
+                Console.WriteLine($" First Name: {validMember.FirstName} \n Last Name: {validMember.LastName} \n Ph: { validMember.ContactNumber} \n Pin: { validMember.Pin}");
                 Console.WriteLine("\n To add this member, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch (choice.ToLower())
@@ -829,6 +829,14 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("========= Obtain a Member's Contact Number ==========\n");
+            if (memberCollection.IsEmpty())
+            {
+                Console.WriteLine(" Error - No members in the Member Collection");
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                StaffMenu();
+
+            }
             Console.WriteLine(" Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
