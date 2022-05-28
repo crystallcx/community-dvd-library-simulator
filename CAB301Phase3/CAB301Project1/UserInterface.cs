@@ -671,7 +671,7 @@ namespace CAB301Project
             {
                 Console.Clear();
                 Console.Write("==========Confirm Add Member ==========\n\n");
-                Console.WriteLine($" Frist Name: {validMember.FirstName} \n Last Name: {validMember.LastName} \n Ph: { validMember.ContactNumber} \n Pin: { validMember.Pin}");
+                Console.WriteLine($" First Name: {validMember.FirstName} \n Last Name: {validMember.LastName} \n Ph: { validMember.ContactNumber} \n Pin: { validMember.Pin}");
                 Console.WriteLine("\n To add this member, press 'Y' or Press or press 'N' to exit ");
                 string choice = Console.ReadLine();
                 switch (choice.ToLower())
