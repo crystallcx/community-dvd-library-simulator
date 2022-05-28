@@ -829,14 +829,6 @@ namespace CAB301Project
         {
             Console.Clear();
             Console.WriteLine("========= Obtain a Member's Contact Number ==========\n");
-            if (memberCollection.IsEmpty())
-            {
-                Console.WriteLine(" Error - No members in the Member Collection");
-                Console.WriteLine("\nPress any key to continue...");
-                Console.ReadKey();
-                StaffMenu();
-
-            }
             Console.WriteLine(" Members found in collection (Last name, First name):\n");
             Console.WriteLine(memberCollection.ToString());
             Console.WriteLine("=====================================================\n");
