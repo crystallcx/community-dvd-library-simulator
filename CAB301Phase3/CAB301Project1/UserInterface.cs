@@ -1339,9 +1339,9 @@ namespace CAB301Project
                 {
                     IMovie temp = movieArray[i];
                     int k = i - 1;
-                    while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
+                    while (k >= 0 && ++top3Counter > 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
                     {
-                        top3Counter++;
+                        //top3Counter++;
                         movieArray[k + 1] = movieArray[k];
                         k = k - 1;
                     }
