@@ -13,6 +13,7 @@ namespace CAB301Project
         MovieGenre validGenre;
         MovieClassification validClassification;
         IMember CurrentlyLoggedInUser;
+        int top3Counter = 0;
 
         public void Initalise()//to delete
         {
@@ -23,14 +24,32 @@ namespace CAB301Project
             Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie7 = new Movie("Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie8 = new Movie("Back To The Future 2");
+            Movie movie9 = new Movie("Back To The Future 3");
+            Movie movie10 = new Movie("Back To The Future 4");
+            Movie movie11 = new Movie("Back To The Future 5");
+            Movie movie12 = new Movie("Back To The Future 6");
+            Movie movie13 = new Movie("Back To The Future 7");
+            Movie movie14 = new Movie("Back To The Future 8");
+            Movie movie15 = new Movie("Back To The Future 9");
+            Movie movie16 = new Movie("Back To The Future 10");
+            Movie movie17 = new Movie("Back To The Future 11");
             movieCollection.Insert(movie1);
             movieCollection.Insert(movie2);
             movieCollection.Insert(movie3);
-            //movieCollection.Insert(movie4);
-            //movieCollection.Insert(movie5);
-            //movieCollection.Insert(movie6);
-            //movieCollection.Insert(movie7);
-            /*
+            movieCollection.Insert(movie4);
+            movieCollection.Insert(movie5);
+            movieCollection.Insert(movie6);
+            movieCollection.Insert(movie7);
+            movieCollection.Insert(movie8);
+            movieCollection.Insert(movie9);
+            movieCollection.Insert(movie10);
+            movieCollection.Insert(movie11);
+            movieCollection.Insert(movie12);
+            movieCollection.Insert(movie13);
+            movieCollection.Insert(movie14);
+
+
             Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
             Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
             Member member3 = new Member("Peter", "Smith", "0404445674", "4837"); //4
@@ -52,12 +71,17 @@ namespace CAB301Project
 
             movie1.AddBorrower(member6);
             movie2.AddBorrower(member6);
-            //movie3.AddBorrower(member6);
+            movie3.AddBorrower(member6);
             movie4.AddBorrower(member6);
             movie5.AddBorrower(member6);
 
             movie1.AddBorrower(member5);
-            */
+            movie7.AddBorrower(member1);
+            movie7.AddBorrower(member2);
+            movie7.AddBorrower(member3);
+            movie7.AddBorrower(member4);
+            movie7.AddBorrower(member5);
+
         }
 
 
@@ -1300,7 +1324,12 @@ namespace CAB301Project
         //Display to 3 borrowed movies
         public void Top3Movies()
         {
+            
+            int top3Counter = 0;
             Console.Clear();
+
+            DateTime startTime, endTime;
+            startTime = DateTime.Now;
             Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
             if (!movieCollection.IsEmpty())
             {
@@ -1312,6 +1341,7 @@ namespace CAB301Project
                     int k = i - 1;
                     while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
                     {
+                        top3Counter++;
                         movieArray[k + 1] = movieArray[k];
                         k = k - 1;
                     }
@@ -1375,11 +1405,20 @@ namespace CAB301Project
             }
             else
             {
+                //to remove
+                Console.WriteLine($"{ DateTime.Now.ToString("HH:mm:ss:ms tt")}");
                 Console.WriteLine($" There are currently no movies in the movie collection.");
                 Console.WriteLine("\nPress any key to return to the member menu.");
                 Console.ReadKey();
                 MemberMenu();
             }
+            Console.WriteLine();
+            //to remove
+            endTime = DateTime.Now;
+            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            Console.WriteLine($"Elapsed Time: {elapsedMillisecs} milliseconds.");
+            Console.WriteLine();
+            Console.WriteLine("Counter: "+ top3Counter);
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
