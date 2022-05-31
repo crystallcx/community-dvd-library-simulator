@@ -24,16 +24,16 @@ namespace CAB301Project
             Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie7 = new Movie("Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie8 = new Movie("Back To The Future 2");
-            Movie movie9 = new Movie("Back To The Future 3");
-            Movie movie10 = new Movie("Back To The Future 4");
-            Movie movie11 = new Movie("Back To The Future 5");
-            Movie movie12 = new Movie("Back To The Future 6");
-            Movie movie13 = new Movie("Back To The Future 7");
-            Movie movie14 = new Movie("Back To The Future 8");
-            Movie movie15 = new Movie("Back To The Future 9");
-            Movie movie16 = new Movie("Back To The Future 10");
-            Movie movie17 = new Movie("Back To The Future 11");
+            Movie movie8 = new Movie("Back To The Future 2", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie9 = new Movie("Back To The Future 3", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie10 = new Movie("Back To The Future 4", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie11 = new Movie("Back To The Future 5", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie12 = new Movie("Back To The Future 6", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie13 = new Movie("Back To The Future 7", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie14 = new Movie("Back To The Future 8", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie15 = new Movie("Back To The Future 9", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie16 = new Movie("Back To The Future 10", MovieGenre.Action, MovieClassification.G, 65, 3);
+            Movie movie17 = new Movie("Back To The Future 11", MovieGenre.Action, MovieClassification.G, 65, 3);
             movieCollection.Insert(movie1);
             movieCollection.Insert(movie2);
             movieCollection.Insert(movie3);
@@ -1333,8 +1333,147 @@ namespace CAB301Project
             Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
             if (!movieCollection.IsEmpty())
             {
+                
                 MovieCollection Collectiontemp = movieCollection;
                 IMovie[] movieArray = Collectiontemp.ToArray();
+                
+                //option 1
+                IMovie tempMovie = new Movie("temp");
+                IMovie first, second, third;
+                //need a temp movie with NoBorrowings = 0
+                first = second = third = tempMovie;
+                for (int i = 0; i < movieArray.Length; i++)
+                {
+                    if (movieArray[i].NoBorrowings > first.NoBorrowings)
+                    {
+                        third = second;
+                        second = first;
+                        first = movieArray[i];
+                        top3Counter++;
+
+
+                    }
+                    else if (movieArray[i].NoBorrowings > second.NoBorrowings)
+                    {
+                        third = second;
+                        second = movieArray[i];
+                        top3Counter++;
+                    }
+                    else if (movieArray[i].NoBorrowings > third.NoBorrowings)
+                    {
+                        third = movieArray[i];
+                        top3Counter++;
+                    }
+                }
+                
+                
+                if (movieArray.Length > 2)
+                {
+
+                    int j = 1;
+                    if (first.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {first.Title} - Total times borrowed: {first.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    if (second.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {second.Title} - Total times borrowed: {second.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    if(third.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {third.Title} - Total times borrowed: {third.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    
+                }
+                else if (movieArray.Length == 2)
+                {
+                    int j = 1;
+                    if (first.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {first.Title} - Total times borrowed: {first.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    if (second.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {second.Title} - Total times borrowed: {second.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    Console.WriteLine($" {j++}) - nil");
+                    
+                }
+                else if (movieArray.Length == 1)
+                {
+                    int j = 1;
+                    if (first.NoBorrowings != 0)
+                    {
+                        Console.WriteLine($" {j++}) {first.Title} - Total times borrowed: {first.NoBorrowings}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($" {j++}) - nil");
+                    }
+                    Console.WriteLine($" {j++}) - nil");
+                    Console.WriteLine($" {j++}) - nil");
+                }
+                
+            }
+            else
+            {
+                //to remove
+                Console.WriteLine($"{ DateTime.Now.ToString("HH:mm:ss:ms tt")}");
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+            Console.WriteLine();
+            //to remove
+            endTime = DateTime.Now;
+            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            Console.WriteLine($"Elapsed Time: {elapsedMillisecs} milliseconds.");
+            Console.WriteLine();
+            Console.WriteLine("Counter: "+ top3Counter);
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+            MemberMenu();
+        }
+
+
+
+        //Display to 3 borrowed movies Version 2 (insertion sort)
+        public void Top3Moviesv2()
+        {
+
+            int top3Counter = 0;
+            Console.Clear();
+
+            DateTime startTime, endTime;
+            startTime = DateTime.Now;
+            Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
+            if (!movieCollection.IsEmpty())
+            {
+
+                MovieCollection Collectiontemp = movieCollection;
+                IMovie[] movieArray = Collectiontemp.ToArray();
+                //option 2
                 for (int i = 1; i < movieArray.Length; i++)
                 {
                     IMovie temp = movieArray[i];
@@ -1347,12 +1486,11 @@ namespace CAB301Project
                     }
                     movieArray[k + 1] = temp;
                 }
-
                 if (movieArray.Length > 2)
                 {
-                    for (int i = 0; i < 3; ++i)//change to 3 or movieArray.Lenght to see all
+                    for (int i = 0; i < movieArray.Length; ++i)//change to 3 or movieArray.Lenght to see all
                     {
-                        if(movieArray[i].NoBorrowings != 0)
+                        if (movieArray[i].NoBorrowings != 0)
                         {
                             Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
                         }
@@ -1360,7 +1498,7 @@ namespace CAB301Project
                         {
                             Console.WriteLine($" {i + 1} - nil");
                         }
-                        
+
                     }
                 }
                 /* - we can use this and comment out the 2 for loops below if needed
@@ -1369,7 +1507,7 @@ namespace CAB301Project
                     Console.WriteLine($" Error - Not enough movies in collection to show top 3. Movies in collection '{movieArray.Length}'.");
                 }
                 */
-                
+
                 else if (movieArray.Length == 2)
                 {
                     for (int i = 0; i < 2; ++i)
@@ -1401,7 +1539,7 @@ namespace CAB301Project
                     Console.WriteLine(" 2 - nil");
                     Console.WriteLine(" 3 - nil");
                 }
-                
+
             }
             else
             {
@@ -1418,12 +1556,11 @@ namespace CAB301Project
             Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
             Console.WriteLine($"Elapsed Time: {elapsedMillisecs} milliseconds.");
             Console.WriteLine();
-            Console.WriteLine("Counter: "+ top3Counter);
+            Console.WriteLine("Counter: " + top3Counter);
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
         }
-
 
         //logout a member return to main menu
         public void MemberLogout()
