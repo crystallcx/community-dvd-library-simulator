@@ -1609,7 +1609,7 @@ namespace CAB301Project
         }
 
 
-
+        /*
         //Display to 3 borrowed movies Version 2 (insertion sort)
         public void Top3Moviesv2()
         {
@@ -1650,12 +1650,12 @@ namespace CAB301Project
 
                     }
                 }
-                /* - we can use this and comment out the 2 for loops below if needed
-                else 
-                {
-                    Console.WriteLine($" Error - Not enough movies in collection to show top 3. Movies in collection '{movieArray.Length}'.");
-                }
-                */
+                // - we can use this and comment out the 2 for loops below if needed
+                //else 
+               // {
+              //      Console.WriteLine($" Error - Not enough movies in collection to show top 3. Movies in collection '{movieArray.Length}'.");
+               // }
+               
 
                 else if (movieArray.Length == 2)
                 {
@@ -1711,5 +1711,6 @@ namespace CAB301Project
             Console.ReadKey();
             MainMenu();
         }
+        */
     }
 }

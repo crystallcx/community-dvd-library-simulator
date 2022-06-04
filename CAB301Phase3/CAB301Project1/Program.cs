@@ -9,127 +9,125 @@ namespace CAB301Project
         static void Main(string[] args)
         {
             UserInterface ui = new UserInterface();
+            //uncomment "Top3Tester for test results
             //Top3Tester();
             ui.MainMenu();
 
         }
 
+        //Test the Top3 method by feeding it arrays of length 1000-20000
+        //Input: Top3 method
+        //Output: Display results to console.
         public static void Top3Tester()
         {
             int stepChange = 1000;
             int numPerN = 10;
             Random rand = new Random((int)DateTime.Now.Ticks);
-
             using (StreamWriter sw = new StreamWriter("results.csv"))
             {
                 sw.WriteLine("n, opCount, runTime");
-
                 for (int i = 0; i < 20; i++)
                 {
-
                     int n = (i + 1) * stepChange;
                     Console.WriteLine("testing n={0}", n);
-
                     long totalOps = 0;
                     double totalTime = 0;
-
+                    IMovie[] data = new IMovie[n];
+                    int myCounter = 0;
+                    for (int k = 0; k < data.Length; k++)
+                    {
+                        data[k] = new Movie($"test {myCounter++}");
+                    }
                     for (int j = 0; j < numPerN; j++)
                     {
-                        //Console.WriteLine("Data is: [{0}]", string.Join(",", data));
-
-
-                        //Console.WriteLine("Searching for {0}", search);
-
-                        IMovie[] data = new IMovie[n];
-                        int myCounter = 0;
-                        for (int k = 0; k < data.Length; k++)
-                        {
-                            data[k] = new Movie($"test {myCounter++}");
-                        }
                         for (int k = 0; k < n; k++)
                         {
                             data[k].NoBorrowings = rand.Next(0, n * 2);
                         }
-
                         int opCount = 0;
-
                         long startTicks = DateTime.Now.Ticks;
-                        Top3(data, out opCount);
+                        opCount = Top3(data);
                         long totalTicks = DateTime.Now.Ticks - startTicks;
-
                         double elapsedTime = (double)totalTicks / (double)TimeSpan.TicksPerSecond;
-
                         totalOps += opCount;
                         totalTime += elapsedTime;
-
-                        //Console.WriteLine("Result idx: {0}, Value: {1}, opCount: {2}, elapsedTime: {3}", result, result != -1 ? data[result] : -1, opCount, elapsedTime);
                     }
-
                     long avOps = totalOps / numPerN;
                     double avTime = totalTime / numPerN;
-
                     sw.WriteLine("{0}, {1}, {2}", n, avOps, avTime);
                 }
             }
         }
 
-        public static void Top3(IMovie[] A, out int opCount)
+        //Method to find and display (to console) the top 3 movies in array A
+        //input: array A of type IMovie
+        //output: opCount - counter of basic operations
+        public static int Top3(IMovie[] A)
         {
-            opCount = 0;
-            //MovieCollection Collectiontemp = movieCollection;
-            // IMovie[] A = Collectiontemp.ToArray();
+            int opCount = 0;
             IMovie tempMovie = new Movie("temp");
             IMovie first, second, third;
-            //need a temp movie with NoBorrowings = 0
-            first = second = third = tempMovie;
-            for (int i = 0; i < A.Length; i++)
-            {
-                if (A[i].NoBorrowings > first.NoBorrowings)
-                {
-                    opCount++;
-                    third = second;
-                    second = first;
-                    first = A[i];
-                }
-                else if (A[i].NoBorrowings > second.NoBorrowings)
-                {
-                    opCount++;
-                    third = second;
-                    second = A[i];
-                }
-                else if (A[i].NoBorrowings > third.NoBorrowings)
-                {
-                    opCount++;
-                    third = A[i];
-                }
-            }
-        }
-
-        public static void InsertionSort(IMovie[] A, out int opCount)
-        {
-            opCount = 0;
-
             int n = A.Length;
-            for (int i = 1; i < n; i++)
+            if (n < 1)
             {
-                IMovie v = A[i];
-                int j = i - 1;
-
-                while (j >= 0 && A[j].NoBorrowings > v.NoBorrowings)
-                {
-                    opCount += 1;
-                    A[j + 1] = A[j];
-                    j = j - 1;
-                }
-
-                if (j >= 0)
-                {
-                    opCount += 1;
-                }
-
-                A[j + 1] = v;
+                Console.WriteLine(" Error - No movies in this movie collection.");
+                return 0;
             }
+            else 
+            { 
+                first = second = third = tempMovie;
+                for (int i = 0; i < n; i++)
+                {
+                    if (A[i].NoBorrowings > first.NoBorrowings)
+                    {
+                        opCount++;
+                        third = second;
+                        second = first;
+                        first = A[i];
+                    }
+                    else if (A[i].NoBorrowings > second.NoBorrowings)
+                    {
+                        opCount++;
+                        third = second;
+                        second = A[i];
+                    }
+                    else if (A[i].NoBorrowings > third.NoBorrowings)
+                    {
+                        opCount++;
+                        third = A[i];
+                    }
+                }
+
+                //debug to print to console
+                int j = 1;
+                if (first.NoBorrowings != 0)
+                {
+                    Console.WriteLine($" {j++}) {first.Title} - Total times borrowed: {first.NoBorrowings}");
+                }
+                else
+                {
+                    Console.WriteLine($" {j++}) - nil");
+                }
+                if (second.NoBorrowings != 0)
+                {
+                    Console.WriteLine($" {j++}) {second.Title} - Total times borrowed: {second.NoBorrowings}");
+                }
+                else
+                {
+                    Console.WriteLine($" {j++}) - nil");
+                }
+                if (third.NoBorrowings != 0)
+                {
+                    Console.WriteLine($" {j++}) {third.Title} - Total times borrowed: {third.NoBorrowings}");
+                }
+                else
+                {
+                    Console.WriteLine($" {j++}) - nil");
+                }
+                Console.WriteLine($"Counter = {opCount}\n");
+                //debug end
+            }
+            return opCount;
         }
-    
     }
 }
