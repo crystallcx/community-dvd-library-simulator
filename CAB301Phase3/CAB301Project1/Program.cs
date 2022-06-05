@@ -5,13 +5,16 @@ namespace CAB301Project
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
             UserInterface ui = new UserInterface();
-            //uncomment "Top3Tester for test results
-            //Top3Tester();
-            ui.MainMenu();
+
+            //Top3Tester(); //uncomment this line if you wish to run tests on top3
+            
+            //ui.Initalise(); /*   uncomment this if you wish to run the program with movies and users   */
+
+            ui.MainMenu(); // comment this line if testing top3
 
         }
 
@@ -46,7 +49,7 @@ namespace CAB301Project
                         }
                         int opCount = 0;
                         long startTicks = DateTime.Now.Ticks;
-                        opCount = Top3(data);
+                        opCount = Top3Movies(data);
                         long totalTicks = DateTime.Now.Ticks - startTicks;
                         double elapsedTime = (double)totalTicks / (double)TimeSpan.TicksPerSecond;
                         totalOps += opCount;
@@ -62,7 +65,7 @@ namespace CAB301Project
         //Method to find and display (to console) the top 3 movies in array A
         //input: array A of type IMovie
         //output: opCount - counter of basic operations
-        public static int Top3(IMovie[] A)
+        public static int Top3Movies(IMovie[] A)
         {
             int opCount = 0;
             IMovie tempMovie = new Movie("temp");
@@ -73,8 +76,8 @@ namespace CAB301Project
                 Console.WriteLine(" Error - No movies in this movie collection.");
                 return 0;
             }
-            else 
-            { 
+            else
+            {
                 first = second = third = tempMovie;
                 for (int i = 0; i < n; i++)
                 {
@@ -125,6 +128,7 @@ namespace CAB301Project
                     Console.WriteLine($" {j++}) - nil");
                 }
                 Console.WriteLine($"Counter = {opCount}\n");
+                Console.WriteLine();
                 //debug end
             }
             return opCount;

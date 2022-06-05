@@ -69,6 +69,11 @@ namespace CAB301Project
         //                  if the member is in the borrowers list, do not add the member to the borrowers list and return false.  
         public bool AddBorrower(IMember member)
         {
+            if(Borrowers.Number == 10)
+            {
+                Console.WriteLine(" Error - No space in borrowers array");
+                return false;
+            }
             if (AvailableCopies < 1)
             {
                 //debug

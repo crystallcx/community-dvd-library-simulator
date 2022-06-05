@@ -14,178 +14,34 @@ namespace CAB301Project
         MovieClassification validClassification;
         IMember CurrentlyLoggedInUser;
 
-        public void Initalise()//to delete
+        //test method to initalise the system with 6 movies and 11 members
+        public void Initalise()
         {
             Movie movie1 = new Movie("Revenge of the Sith", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie2 = new Movie("Die Hard", MovieGenre.Action, MovieClassification.G, 65, 4);
             Movie movie3 = new Movie("Willy Wonker", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie4 = new Movie("Lord of the Rings", MovieGenre.Action, MovieClassification.G, 65, 3);
             Movie movie5 = new Movie("The Clone Wars", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-
-
-            Movie movie7 = new Movie("Back To The Future 01", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie8 = new Movie("Back To The Future 02", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie9 = new Movie("Back To The Future 03", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie10 = new Movie("Back To The Future 04", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie11 = new Movie("Back To The Future 05", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie12 = new Movie("Back To The Future 06", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie13 = new Movie("Back To The Future 07", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie14 = new Movie("Back To The Future 08", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie15 = new Movie("Back To The Future 09", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie16 = new Movie("Back To The Future 10", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie17 = new Movie("Back To The Future 11", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie18 = new Movie("Back To The Future 12", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie19 = new Movie("Back To The Future 13", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie20 = new Movie("Back To The Future 14", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie21 = new Movie("Back To The Future 15", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie22 = new Movie("Back To The Future 16", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie23 = new Movie("Back To The Future 17", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie24 = new Movie("Back To The Future 18", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie25 = new Movie("Back To The Future 19", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie26 = new Movie("Back To The Future 20", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie27 = new Movie("Back To The Future 21", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie28 = new Movie("Back To The Future 22", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie29 = new Movie("Back To The Future 23", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie30 = new Movie("Back To The Future 24", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie31 = new Movie("Back To The Future 25", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie32 = new Movie("Back To The Future 26", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie33 = new Movie("Back To The Future 27", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie34 = new Movie("Back To The Future 28", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie35 = new Movie("Back To The Future 29", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie36 = new Movie("Back To The Future 30", MovieGenre.Action, MovieClassification.G, 65, 3);
-
-
-
-
-            Movie movie37 = new Movie("Zzzzzz Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie38 = new Movie("Zzzzzzz Back To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie39 = new Movie("ZzzzzzzzBack To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie40 = new Movie("ZzzzzzzzzBack To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie41 = new Movie("ZzzzzzzzzzBack To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie42 = new Movie("ZzzzzzzzzzzBack To The Future 1", MovieGenre.Action, MovieClassification.G, 65, 3);
-
-            Movie movie43 = new Movie("Back To The Future 37", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie44 = new Movie("Back To The Future 38", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie45 = new Movie("Back To The Future 39", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie46 = new Movie("Back To The Future 40", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie47 = new Movie("Back To The Future 41", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie48 = new Movie("Back To The Future 42", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie49 = new Movie("Back To The Future 43", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie50 = new Movie("Back To The Future 44", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie51 = new Movie("Back To The Future 45", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie52 = new Movie("Back To The Future 46", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie53 = new Movie("Back To The Future 47", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie54 = new Movie("Back To The Future 48", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie55 = new Movie("Back To The Future 49", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie56 = new Movie("Back To The Future 50", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie57 = new Movie("Back To The Future 51", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie58 = new Movie("Back To The Future 52", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie59 = new Movie("Back To The Future 53", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie60 = new Movie("Back To The Future 54", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie61 = new Movie("Back To The Future 55", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie62 = new Movie("Back To The Future 56", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie63 = new Movie("Back To The Future 57", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie64 = new Movie("Back To The Future 58", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie65 = new Movie("Back To The Future 59", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie66 = new Movie("Back To The Future 60", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie67 = new Movie("Back To The Future 61", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie68 = new Movie("Back To The Future 62", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie69 = new Movie("Back To The Future 63", MovieGenre.Action, MovieClassification.G, 65, 3);
-            Movie movie70 = new Movie("Back To The Future 64", MovieGenre.Action, MovieClassification.G, 65, 3);
-            /*
+            Movie movie6 = new Movie("Harry Potter 1", MovieGenre.Action, MovieClassification.G, 65, 11);
+       
             movieCollection.Insert(movie1);
             movieCollection.Insert(movie2);
             movieCollection.Insert(movie3);
             movieCollection.Insert(movie4);
             movieCollection.Insert(movie5);
             movieCollection.Insert(movie6);
-            */
-            movieCollection.Insert(movie7);
-            movieCollection.Insert(movie8);
-            movieCollection.Insert(movie9);
-            movieCollection.Insert(movie10);
-            movieCollection.Insert(movie11);
-            movieCollection.Insert(movie12);
-            movieCollection.Insert(movie13);
-            movieCollection.Insert(movie14);
-            movieCollection.Insert(movie15);
-            movieCollection.Insert(movie16);
-
             
-            movieCollection.Insert(movie17);
-            movieCollection.Insert(movie18);
-            movieCollection.Insert(movie19);
-            movieCollection.Insert(movie20);
-            movieCollection.Insert(movie21);
-            movieCollection.Insert(movie22);
-            movieCollection.Insert(movie21);
-            movieCollection.Insert(movie22);
-            movieCollection.Insert(movie23);
-            movieCollection.Insert(movie24);
-            movieCollection.Insert(movie25);
-            movieCollection.Insert(movie26);
-            
-            movieCollection.Insert(movie27);
-            movieCollection.Insert(movie28);
-            movieCollection.Insert(movie29);
-            movieCollection.Insert(movie30);
-            movieCollection.Insert(movie31);
-            movieCollection.Insert(movie32);
-            movieCollection.Insert(movie33);
-            movieCollection.Insert(movie34);
-            movieCollection.Insert(movie35);
-            movieCollection.Insert(movie36);
-
-            
-
-            movie7.NoBorrowings = 1;
-            movie8.NoBorrowings = 2;
-            movie9.NoBorrowings = 3;
-            movie10.NoBorrowings = 4;
-            movie11.NoBorrowings = 5;
-            movie12.NoBorrowings = 6;
-            movie13.NoBorrowings = 7;
-            movie14.NoBorrowings = 8;
-            movie15.NoBorrowings = 9;
-            movie16.NoBorrowings = 10;
-            //size 10 = count 4
-
-            movie17.NoBorrowings = 11;
-            movie18.NoBorrowings = 12;
-            movie19.NoBorrowings = 13;
-            movie20.NoBorrowings = 14;
-            movie21.NoBorrowings = 15;
-            movie22.NoBorrowings = 16;
-            movie23.NoBorrowings = 17;
-            movie24.NoBorrowings = 18;
-            movie25.NoBorrowings = 19;
-            movie26.NoBorrowings = 20;
-            //size 20 = count 10
-
-            movie27.NoBorrowings = 21;
-            movie28.NoBorrowings = 22;
-            movie29.NoBorrowings = 23;
-            movie30.NoBorrowings = 24;
-            movie31.NoBorrowings = 25;
-            movie32.NoBorrowings = 26;
-            movie33.NoBorrowings = 27;
-            movie34.NoBorrowings = 28;
-            movie35.NoBorrowings = 29;
-            movie36.NoBorrowings = 30;
-            //size 30 = count 12
-
-
-
-
-
             Member member1 = new Member("John", "Kelly", "0404444544", "4837"); //3
             Member member2 = new Member("Harry", "Last", "0404234444", "4837"); //5
             Member member3 = new Member("Peter", "Smith", "0404445674", "4837"); //4
             Member member4 = new Member("John", "Alpha", "0423444441", "4837"); //2
             Member member5 = new Member("Chris", "Zebra", "0404444554", "4837"); //1
             Member member6 = new Member("James", "Wyatt", "0422977674", "1313"); //1
-            Member member7 = new Member("Jane", "Smith", "0422977674", "1414"); //1
+            Member member7 = new Member("Jacky", "Smith", "0422977674", "1414"); //1
+            Member member8 = new Member("Larry", "Smith", "0422977674", "1414"); //1
+            Member member9 = new Member("Betty", "Smith", "0422977674", "1414"); //1
+            Member member10 = new Member("Chuck", "Smith", "0422977674", "1414"); //1
+            Member member11 = new Member("David", "Smith", "0422977674", "1414"); //1
             memberCollection.Add(member1);
             memberCollection.Add(member2);
             memberCollection.Add(member3);
@@ -193,58 +49,36 @@ namespace CAB301Project
             memberCollection.Add(member5);
             memberCollection.Add(member6);
             memberCollection.Add(member7);
-            /*
-            movie2.AddBorrower(member2);
-            movie2.AddBorrower(member3);
-            movie2.AddBorrower(member1);
+            memberCollection.Add(member8);
+            memberCollection.Add(member9);
+            memberCollection.Add(member10);
+            memberCollection.Add(member11);
 
-            movie1.AddBorrower(member6);
-            movie2.AddBorrower(member6);
-            movie3.AddBorrower(member6);
-            movie4.AddBorrower(member6);
-            movie5.AddBorrower(member6);
+            movie2.AddBorrower(member2); //Die Hard
+            movie2.AddBorrower(member3); //Die Hard
+            movie2.AddBorrower(member1); //Die Hard
+            movie1.AddBorrower(member6); //Revenge of the Sith
+            movie2.AddBorrower(member6); //Die Hard
+            movie3.AddBorrower(member6); //Willy Wonker 
+            movie4.AddBorrower(member6); //Lord of the Rings
+            movie5.AddBorrower(member6); //The Clone Wars
+            movie1.AddBorrower(member5); //Revenge of the Sith
+               //Top 3 Expected Results:
+               // Die Hard - 4
+               //Revenge of the Sith - 2
+               //Lord of the Rings - 1
 
-            movie1.AddBorrower(member5);
-            movie7.AddBorrower(member1);
-            movie7.AddBorrower(member2);
-            movie7.AddBorrower(member3);
-            movie7.AddBorrower(member4);
-            movie7.AddBorrower(member5);
-
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-            movie14.AddBorrower(member7);
-            movie14.RemoveBorrower(member7);
-
-            movie13.AddBorrower(member7);
-            movie12.AddBorrower(member7);
-            movie11.AddBorrower(member7);
-            movie10.AddBorrower(member7);
-
-            movie13.RemoveBorrower(member7);
-            movie12.RemoveBorrower(member7);
-            movie11.RemoveBorrower(member7);
-            movie10.RemoveBorrower(member7);
-
-            movie13.AddBorrower(member7);
-            movie12.AddBorrower(member7);
-            movie11.AddBorrower(member7);
-            movie10.AddBorrower(member7);
-
-            movie13.AddBorrower(member1);
-            movie12.AddBorrower(member1);
-            movie11.AddBorrower(member1);
-            movie10.AddBorrower(member1);
+            /* test case: add more than 10 members to 1 movie 
+            movie6.AddBorrower(member1);
+            movie6.AddBorrower(member2);
+            movie6.AddBorrower(member3);
+            movie6.AddBorrower(member4);
+            movie6.AddBorrower(member5);
+            movie6.AddBorrower(member6);
+            movie6.AddBorrower(member7);
+            movie6.AddBorrower(member8);
+            movie6.AddBorrower(member9);
+            movie6.AddBorrower(member10);
             */
         }
 
@@ -253,7 +87,7 @@ namespace CAB301Project
         //main menu
         public void MainMenu()
         {
-            Initalise(); /*   delete this line later   */
+            
 
 
             Console.Clear();
@@ -275,8 +109,8 @@ namespace CAB301Project
                         StaffLogin();
                         break;
                     case 2:
-                        MemberLogin(); /* incomplete */
-                        break;
+                        MemberLogin(); 
+            break;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -390,7 +224,7 @@ namespace CAB301Project
                         CurrentlyBorrowed(CurrentlyLoggedInUser);
                         break;
                     case 6:
-                        Top3Movies();/*something here */
+                        Top3Movies();
                         break;
                     case 0:
                         MemberLogout();
@@ -1330,7 +1164,7 @@ namespace CAB301Project
                     switch (choice.ToLower())
                     {
                         case "y":
-                            if (validMovie.AddBorrower(member1))
+                            if (validMovie.AddBorrower(member1) == true)
                             {
                                 Console.WriteLine($"\n {validMovie.Title} has been successfully borrowed.");
                             }
@@ -1495,27 +1329,27 @@ namespace CAB301Project
             if (!movieCollection.IsEmpty())
             {
                 MovieCollection Collectiontemp = movieCollection;
-                IMovie[] movieArray = Collectiontemp.ToArray();
+                IMovie[] movieArray = Collectiontemp.ToArray(); // input size
                 IMovie tempMovie = new Movie("temp");
                 IMovie first, second, third;
                 //need a temp movie with NoBorrowings = 0
                 first = second = third = tempMovie;
                 for (int i = 0; i < movieArray.Length; i++)
                 {
-                    if (movieArray[i].NoBorrowings > first.NoBorrowings)
+                    if (movieArray[i].NoBorrowings > first.NoBorrowings) //basic operation
                     {
                         top3Counter++;
                         third = second;
                         second = first;
                         first = movieArray[i];
                     }
-                    else if (movieArray[i].NoBorrowings > second.NoBorrowings)
+                    else if (movieArray[i].NoBorrowings > second.NoBorrowings) //basic operation
                     {
                         top3Counter++;
                         third = second;
                         second = movieArray[i];
                     }
-                    else if (movieArray[i].NoBorrowings > third.NoBorrowings)
+                    else if (movieArray[i].NoBorrowings > third.NoBorrowings) //basic operation
                     {
                         top3Counter++;
                         third = movieArray[i];
@@ -1527,27 +1361,27 @@ namespace CAB301Project
                     int j = 1;
                     if (first.NoBorrowings != 0)
                     {
-                        Console.WriteLine($" {j++}) {first.Title} - Total times borrowed: {first.NoBorrowings}");
+                        Console.WriteLine($" {j++} - {first.Title} - Total times borrowed: {first.NoBorrowings}");
                     }
                     else
                     {
-                        Console.WriteLine($" {j++}) - nil");
+                        Console.WriteLine($" {j++} - nil");
                     }
                     if (second.NoBorrowings != 0)
                     {
-                        Console.WriteLine($" {j++}) {second.Title} - Total times borrowed: {second.NoBorrowings}");
+                        Console.WriteLine($" {j++} - {second.Title} - Total times borrowed: {second.NoBorrowings}");
                     }
                     else
                     {
-                        Console.WriteLine($" {j++}) - nil");
+                        Console.WriteLine($" {j++} - nil");
                     }
                     if(third.NoBorrowings != 0)
                     {
-                        Console.WriteLine($" {j++}) {third.Title} - Total times borrowed: {third.NoBorrowings}");
+                        Console.WriteLine($" {j++} - {third.Title} - Total times borrowed: {third.NoBorrowings}");
                     }
                     else
                     {
-                        Console.WriteLine($" {j++}) - nil");
+                        Console.WriteLine($" {j++} - nil");
                     }
                     
                 }
@@ -1587,12 +1421,6 @@ namespace CAB301Project
                     Console.WriteLine($" {j++}) - nil");
                     Console.WriteLine($" {j++}) - nil");
                 }
-                Console.WriteLine();
-                //to remove
-                for (int i = 0; i < movieArray.Length; i++)
-                {
-                    Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
-                }
             }
             else
             {
@@ -1601,106 +1429,14 @@ namespace CAB301Project
                 Console.ReadKey();
                 MemberMenu();
             }
-            Console.WriteLine();
-            Console.WriteLine("Counter: "+ top3Counter);
+            //Console.WriteLine();
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
         }
 
 
-        /*
-        //Display to 3 borrowed movies Version 2 (insertion sort)
-        public void Top3Moviesv2()
-        {
-            Console.Clear();
-            Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
-            if (!movieCollection.IsEmpty())
-            {
 
-                MovieCollection Collectiontemp = movieCollection;
-                IMovie[] movieArray = Collectiontemp.ToArray();
-                //option 2
-                for (int i = 1; i < movieArray.Length; i++)
-                {
-                    IMovie temp = movieArray[i];
-                    int k = i - 1;
-                    while (k >= 0 && movieArray[k].NoBorrowings < temp.NoBorrowings)
-                    {
-                        //top3Counter++;
-                        movieArray[k + 1] = movieArray[k];
-                        k = k - 1;
-                    }
-                    movieArray[k + 1] = temp;
-                }
-                
-                Console.WriteLine();
-                if (movieArray.Length > 2)
-                {
-                    for (int i = 0; i < movieArray.Length; ++i)//change to 3 or movieArray.Lenght to see all
-                    {
-                        if (movieArray[i].NoBorrowings != 0)
-                        {
-                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($" {i + 1} - nil");
-                        }
-
-                    }
-                }
-                // - we can use this and comment out the 2 for loops below if needed
-                //else 
-               // {
-              //      Console.WriteLine($" Error - Not enough movies in collection to show top 3. Movies in collection '{movieArray.Length}'.");
-               // }
-               
-
-                else if (movieArray.Length == 2)
-                {
-                    for (int i = 0; i < 2; ++i)
-                    {
-                        if (movieArray[i].NoBorrowings != 0)
-                        {
-                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($" {i + 1} - nil");
-                        }
-                    }
-                    Console.WriteLine(" 3 - nil");
-                }
-                else if (movieArray.Length == 1)
-                {
-                    for (int i = 0; i < 1; ++i)
-                    {
-                        if (movieArray[i].NoBorrowings != 0)
-                        {
-                            Console.WriteLine($" {i + 1} - {movieArray[i].Title} - Total times borrowed: {movieArray[i].NoBorrowings}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($" {i + 1} - nil");
-                        }
-                    }
-                    Console.WriteLine(" 2 - nil");
-                    Console.WriteLine(" 3 - nil");
-                }
-            }
-            else
-            {
-                Console.WriteLine($" There are currently no movies in the movie collection.");
-                Console.WriteLine("\nPress any key to return to the member menu.");
-                Console.ReadKey();
-                MemberMenu();
-            }
-            Console.WriteLine();
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
-            MemberMenu();
-        }
 
         //logout a member return to main menu
         public void MemberLogout()
@@ -1711,6 +1447,5 @@ namespace CAB301Project
             Console.ReadKey();
             MainMenu();
         }
-        */
     }
 }
