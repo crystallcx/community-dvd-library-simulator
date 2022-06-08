@@ -71,7 +71,7 @@ namespace CAB301Project
             IMovie tempMovie = new Movie("temp");
             IMovie first, second, third;
             int n = A.Length;
-            if (n < 1)
+            if (A == null)
             {
                 Console.WriteLine(" Error - No movies in this movie collection.");
                 return 0;
