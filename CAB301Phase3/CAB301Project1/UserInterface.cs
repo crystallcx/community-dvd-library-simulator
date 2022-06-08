@@ -63,7 +63,7 @@ namespace CAB301Project
             movie4.AddBorrower(member6); //Lord of the Rings
             movie5.AddBorrower(member6); //The Clone Wars
             movie1.AddBorrower(member5); //Revenge of the Sith
-               //Top 3 Expected Results:
+             //Top 3 Expected Results:
                // Die Hard - 4
                //Revenge of the Sith - 2
                //Lord of the Rings - 1
@@ -1326,10 +1326,17 @@ namespace CAB301Project
             Console.Clear();
 
             Console.WriteLine("============= Top 3 Borrowed Movies =============\n");
-            if (!movieCollection.IsEmpty())
+            MovieCollection Collectiontemp = movieCollection;
+            IMovie[] movieArray = Collectiontemp.ToArray(); // input size
+            if (movieArray == null)
             {
-                MovieCollection Collectiontemp = movieCollection;
-                IMovie[] movieArray = Collectiontemp.ToArray(); // input size
+                Console.WriteLine($" There are currently no movies in the movie collection.");
+                Console.WriteLine("\nPress any key to return to the member menu.");
+                Console.ReadKey();
+                MemberMenu();
+            }
+            else
+            { 
                 IMovie tempMovie = new Movie("temp");
                 IMovie first, second, third;
                 //need a temp movie with NoBorrowings = 0
@@ -1422,14 +1429,6 @@ namespace CAB301Project
                     Console.WriteLine($" {j++}) - nil");
                 }
             }
-            else
-            {
-                Console.WriteLine($" There are currently no movies in the movie collection.");
-                Console.WriteLine("\nPress any key to return to the member menu.");
-                Console.ReadKey();
-                MemberMenu();
-            }
-            //Console.WriteLine();
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             MemberMenu();
