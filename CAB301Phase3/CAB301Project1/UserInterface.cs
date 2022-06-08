@@ -54,19 +54,20 @@ namespace CAB301Project
             memberCollection.Add(member10);
             memberCollection.Add(member11);
 
-            // movie2.AddBorrower(member2); //Die Hard
-            // movie2.AddBorrower(member3); //Die Hard
-            // movie2.AddBorrower(member1); //Die Hard
-            // movie1.AddBorrower(member6); //Revenge of the Sith
-            // movie2.AddBorrower(member6); //Die Hard
-            // movie3.AddBorrower(member6); //Willy Wonker 
-            // movie4.AddBorrower(member6); //Lord of the Rings
-            // movie5.AddBorrower(member6); //The Clone Wars
-            // movie1.AddBorrower(member5); //Revenge of the Sith
-            //Top 3 Expected Results:
-            // Die Hard - 4
-            //Revenge of the Sith - 2
-            //Lord of the Rings - 1
+
+            movie2.AddBorrower(member2); //Die Hard
+            movie2.AddBorrower(member3); //Die Hard
+            movie2.AddBorrower(member1); //Die Hard
+            movie1.AddBorrower(member6); //Revenge of the Sith
+            movie2.AddBorrower(member6); //Die Hard
+            movie3.AddBorrower(member6); //Willy Wonker 
+            movie4.AddBorrower(member6); //Lord of the Rings
+            movie5.AddBorrower(member6); //The Clone Wars
+            movie1.AddBorrower(member5); //Revenge of the Sith
+             //Top 3 Expected Results:
+               // Die Hard - 4
+               //Revenge of the Sith - 2
+               //Lord of the Rings - 1
 
             /* test case: add more than 10 members to 1 movie 
             movie6.AddBorrower(member1);

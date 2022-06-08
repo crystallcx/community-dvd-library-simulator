@@ -22,3 +22,7 @@ Version 1.1
 Version 1.2
 - Added/tested and completed all methods in UserInterface.cs (1400 lines)
 - Final checks and testing
+-
+Version 1.3
+- Added Report 
+- Final clean up
