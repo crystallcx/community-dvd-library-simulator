@@ -12,7 +12,7 @@ namespace CAB301Project
 
             //Top3Tester(); //uncomment this line if you wish to run tests on top3
             
-            //ui.Initalise(); /*   uncomment this if you wish to run the program with movies and users   */
+            ui.Initalise(); /*   uncomment this if you wish to run the program with movies and users   */
 
             ui.MainMenu(); // comment this line if testing top3
 

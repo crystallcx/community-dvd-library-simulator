@@ -786,25 +786,29 @@ namespace CAB301Project
                 //validMember = memberCollection.Search(member);
                 Console.WriteLine();
             }
+            
             bool validInput = false;
             int counter = 0;
             IMovie[] tempArray = movieCollection.ToArray();
-            //check if validmember is in any of the borrowers array for each movie in the collection
-            foreach (IMovie movie in tempArray)
+            if (tempArray != null)
             {
-                if (movie.Borrowers.Search(validMember))
+                //check if validmember is in any of the borrowers array for each movie in the collection
+                foreach (IMovie movie in tempArray)
                 {
-                    counter++;
-                    validInput = true;
+                    if (movie.Borrowers.Search(validMember))
+                    {
+                        counter++;
+                        validInput = true;
+                    }
                 }
-            }
-            if (validInput == true)
-            {
-                Console.WriteLine($" Error - Cannot remove '{validMember.FirstName} {validMember.LastName}' as they have DVDs on borrow.");
-                Console.WriteLine($" Number of DVDs on borrow: {counter}");
-                Console.WriteLine("\nPress any key to return to the staff menu.");
-                Console.ReadKey();
-                StaffMenu();
+                if (validInput == true)
+                {
+                    Console.WriteLine($" Error - Cannot remove '{validMember.FirstName} {validMember.LastName}' as they have DVDs on borrow.");
+                    Console.WriteLine($" Number of DVDs on borrow: {counter}");
+                    Console.WriteLine("\nPress any key to return to the staff menu.");
+                    Console.ReadKey();
+                    StaffMenu();
+                }
             }
 
             Console.WriteLine("Press any key to continue...");
