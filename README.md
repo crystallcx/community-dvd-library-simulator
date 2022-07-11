@@ -1,4 +1,4 @@
-# Jw40-CAB301-Assignment-3
+# Jw40
 - Development of a Software Application for a Community Library to Manage Its Movie DVDs
 
 Version 1.0 
