@@ -1,0 +1,78 @@
+using System;
+
+namespace CAB301_Tests_Assessment1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+             * Unit test suite for the CAB301 classes and interfaces.  
+             */
+
+            /// test dataset.
+            Member thirdWheeler = new Member("Joe", "Bloggs", "0332435335", "123445");
+            Member peepoPogWow = new Member("Steve", "Bloggs", "0432236678", "1234");
+            Member pepeTheFrog = new Member("Pepe", "Kek", "0477458654", "123456");
+            Member pepeTheFrog2 = new Member("SuperPepe", "Kek", "0477458654", "123456");
+            Member fourth = new Member("Yoshi", "Hoshimoto", "0478526798", "45536");
+            Member fifth = new Member("Ash", "Ketchum", "0469225439", "54321");
+            Member wereNotHere = new Member ("Joe", "Mama", "GetRickrolled", "a80"); //this one is NOT added to the collection.
+
+            /// test phone number verification.
+            Console.WriteLine("All contact numbers except the last one (for obvious reasons) should be valid.\n");
+            Console.WriteLine(string.Format("Joe Bloggs' number: {0}, is valid: {1}", thirdWheeler.ContactNumber, IMember.IsValidContactNumber(thirdWheeler.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("Steve Bloggs' number: {0}, is valid: {1}", peepoPogWow.ContactNumber, IMember.IsValidContactNumber(peepoPogWow.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("Pepe Kek's number: {0}, is valid: {1}", pepeTheFrog.ContactNumber, IMember.IsValidContactNumber(pepeTheFrog.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("SuperPepe Kek's number: {0}, is valid: {1}", pepeTheFrog2.ContactNumber, IMember.IsValidContactNumber(pepeTheFrog2.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("Yoshi Hoshimoto's number: {0}, is valid: {1}", fourth.ContactNumber, IMember.IsValidContactNumber(fourth.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("Ash Ketchum's number: {0}, is valid: {1}", fifth.ContactNumber, IMember.IsValidContactNumber(fifth.ContactNumber).ToString()));
+            Console.WriteLine(string.Format("Joe Mama's number: {0}, is valid: {1}", wereNotHere.ContactNumber, IMember.IsValidContactNumber(wereNotHere.ContactNumber).ToString()));
+            Console.WriteLine("==================================");
+
+            /// test PIN verification.
+            Console.WriteLine("\nAll PIN numbers except the last one (it has a single letter and has the wrong length) should be valid.\n");
+            Console.WriteLine(string.Format("Joe Bloggs' PIN: {0}, is valid: {1}", thirdWheeler.Pin, IMember.IsValidPin(thirdWheeler.Pin).ToString()));
+            Console.WriteLine(string.Format("Steve Bloggs' PIN: {0}, is valid: {1}", peepoPogWow.Pin, IMember.IsValidPin(peepoPogWow.Pin).ToString()));
+            Console.WriteLine(string.Format("Pepe Kek's PIN: {0}, is valid: {1}", pepeTheFrog.Pin, IMember.IsValidPin(pepeTheFrog.Pin).ToString()));
+            Console.WriteLine(string.Format("SuperPepe Kek's PIN: {0}, is valid: {1}", pepeTheFrog2.Pin, IMember.IsValidPin(pepeTheFrog2.Pin).ToString()));
+            Console.WriteLine(string.Format("Yoshi Hoshimoto's PIN: {0}, is valid: {1}", fourth.Pin, IMember.IsValidPin(fourth.Pin).ToString()));
+            Console.WriteLine(string.Format("Ash Ketchum's PIN: {0}, is valid: {1}", fifth.Pin, IMember.IsValidPin(fifth.Pin).ToString()));
+            Console.WriteLine(string.Format("Joe Mama's PIN: {0}, is valid: {1}", wereNotHere.Pin, IMember.IsValidPin(wereNotHere.Pin).ToString()));
+            Console.WriteLine("==================================");
+            
+            /// test collection construction. All members should be sorted by last name, then first name if last names of some elements are identical. 
+            MemberCollection collection = new MemberCollection(10);
+            Console.WriteLine("\nAdding collection members...");
+            collection.Add(thirdWheeler); 
+            collection.Add(fifth);
+            collection.Add(pepeTheFrog2);
+            collection.Add(fourth);
+            collection.Add(peepoPogWow);
+            collection.Add(pepeTheFrog);
+            Console.WriteLine("Done.");
+            Console.WriteLine("\nMember Collection contents. (Hopefully sorted by last name then first name correctly) \n==================================");
+            Console.WriteLine(collection.ToString());
+
+            /// Remove one member. 
+            /// All other members should still be in their original order sans the removed element which
+            /// shouldn't appear at all. 
+            Console.WriteLine("\nRemoving One of the Members with \"Kek\" as a last name");
+            collection.Delete(pepeTheFrog2);
+            Console.WriteLine("Done.");
+            Console.WriteLine("\nMember Collection contents after deleting one entry: \n==================================");
+            Console.WriteLine(collection.ToString());
+
+            /// Do a binary search for "Joe Bloggs." (in a correct implementation, should return true)
+            Console.WriteLine("\nBinary searching for \"Joe Bloggs.\" Should return true.");
+            Console.WriteLine(string.Format("Result came back with {0}", collection.Search(thirdWheeler)));
+            
+            /// Do a second binary search for "Joe Mama" (in a correct implementation, should return false as it wasn't added to the collection)
+            Console.WriteLine("\nBinary searching for \"Joe Mama.\" Should return false.");
+            Console.WriteLine(string.Format("Result came back with {0}", collection.Search(wereNotHere)));
+
+            /// Print final message
+            Console.WriteLine("\nDone. If any of the output values were not as expected, then the implementation may have a bug!");
+        }
+    }
+}
