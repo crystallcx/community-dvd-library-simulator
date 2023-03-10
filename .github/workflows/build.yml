@@ -13,7 +13,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Restore NuGet packages
-      run: nuget restore
+      run: dotnet restore ./CAB301Phase3/CAB301Project1/CAB301Project.csproj
 
     - name: Build
       run: msbuild ./CAB301Phase3/CAB301Project1.sln /p:Configuration=Release
