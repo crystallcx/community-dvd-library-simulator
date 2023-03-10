@@ -16,4 +16,4 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild /p:Configuration=Release /t:CAB301Project1
+      run: msbuild ./CAB301Phase3/CAB301Project1.sln /p:Configuration=Release
